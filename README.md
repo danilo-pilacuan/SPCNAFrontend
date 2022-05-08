@@ -1,4 +1,4 @@
-# SPCNABackend
+# SPCNAFrontend
 Proceso de instalación:
 Sistema: Ubuntu 20.04 LTS
 Gestor de Dependencias: NodeJS
