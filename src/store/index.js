@@ -1,9 +1,16 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
+import Vuex, { Store } from 'vuex'
+import VuexPersistence from 'vuex-persist';
+import localForage from 'localforage';
+const vuexLocal = new VuexPersistence({
+  storage: localForage,
+  asyncStorage: true,
+});
+
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state: {
     authenticated: false,
     userType: 0,
@@ -11,7 +18,10 @@ export default new Vuex.Store({
     selectedCourse: null,
     currentUser: null,
     selectedUserTask:null,
+    selectedTask:null,
+    selectedLesson:null,
     voiceList:[],
+    enableAudio: false,
     
   },
   mutations: {
@@ -24,6 +34,7 @@ export default new Vuex.Store({
     SET_SELECTED_USER_TASK:(state,selectedUserTask)=> state.selectedUserTask = selectedUserTask,
     SET_VOICE_LIST:(state,voiceList)=> state.voiceList = voiceList,
     SET_SYNTH_VOICE:(state,synthVoice)=> state.synthVoice = synthVoice,
+    SET_ENABLE_AUDIO:(state,enableAudio)=> state.enableAudio = enableAudio,
   },
   actions: {
     setAuth: ({commit},auth) => commit('SET_AUTH',auth),
@@ -34,8 +45,12 @@ export default new Vuex.Store({
     setSelectedTask:({commit},selectedTask)=> commit('SET_SELECTED_TASK',selectedTask),
     setSelectedUserTask:({commit},selectedUserTask)=> commit('SET_SELECTED_USER_TASK',selectedUserTask),
     setVoiceList:({commit},voiceList)=> commit('SET_VOICE_LIST',voiceList),
-    setSynthVoice:({commit},synthVoice)=> commit('SET_SYNTH_VOICE',synthVoice)
+    setSynthVoice:({commit},synthVoice)=> commit('SET_SYNTH_VOICE',synthVoice),
+    setEnableAudio:({commit},enableAudio)=> commit('SET_ENABLE_AUDIO',enableAudio)
   },
   modules: {
-  }
+  },
+  plugins: [vuexLocal.plugin],
 })
+
+export default store;

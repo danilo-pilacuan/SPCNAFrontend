@@ -1,9 +1,9 @@
 <template>
-  <div id="home" tabindex="-1" @keydown.alt="handleKeydownAlt">
-    
+  
+  <div class="home">
+    <Keypress key-event="keyup" :multiple-keys="multiple" @success="procesarTecladoAlt" />
 
     <VoiceComponent ref="componenteSpeak" :texto="texto" :reproducir="reproducir"
-    
     @onTexto="emitTexto"
     @onReproducir="emitReproducir"
     ></VoiceComponent>
@@ -41,7 +41,7 @@
       </div>
     </div>
 
-    <div class="container"> <!-- v-show="userType == 3">-->
+    <div class="container" v-show="userType == 3">
       <div class="block">
         <div class="columns">
           <div class="column">
@@ -91,11 +91,8 @@
             <section class="hero is-primary">
               <div class="hero-body">
                 <p class="title">Actividades</p>
-                <p class="subtitle" v-show="userType == 2">
+                <p class="subtitle">
                   Administración actividades
-                </p>
-                <p class="subtitle" v-show="userType == 3">
-                  Realizar actividades
                 </p>
               </div>
             </section>
@@ -103,27 +100,6 @@
         </div>
       </div>
     </div>
-
-    <!-- <div class="container">
-      <div class="block">
-        <div class="columns">
-          <div class="column">
-            <section class="hero is-primary">
-            <div class="hero-body">
-                <p class="title">Primary hero</p>
-                <p class="subtitle">Primary subtitle</p>
-            </div>
-            </section>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-    <!-- <h1>authenticated</h1>
-    <h2 v-if="authenticated">Si</h2>
-    <h2 v-else>No</h2>
-    <h1>userType</h1>
-    <h2>{{ userType }}</h2> -->
   </div>
 </template>
 
@@ -134,13 +110,47 @@ import VoiceComponent from '/src/components/VoiceComponent'
 export default {
   components: {
     VoiceComponent: VoiceComponent,
-    
+    Keypress: () => import('vue-keypress')
   },
   data() {
     return {
       
       texto:this.$t('ayudaHome'), //"Bienvenido, presione alt mas w para ir al area de trabajo o alt mas ye para recibir ayuda",
       reproducir:false,
+
+      pressedKeyCode: null,
+      multiple: [
+        {
+          keyCode: "M".charCodeAt(0), // 
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "C".charCodeAt(0), // 
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "H".charCodeAt(0), // H
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "X".charCodeAt(0), // H
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "Y".charCodeAt(0), // H
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "Z".charCodeAt(0), // H
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+      ],
       
     };
   },
@@ -149,10 +159,6 @@ export default {
     
     console.log(this.authenticated);
     console.log(this.userType);
-    
-    
-    
-    
     this.activateVoiceComponent()
   },
   computed: {
@@ -172,8 +178,9 @@ export default {
   },
   methods: {
     
-    activateVoiceComponent() {
-      setTimeout(() => this.reproducir=true, 2000);
+    someMethod(response) {
+      // Do something
+      console.log("assada")
     },
     speakF()
     {
@@ -193,15 +200,54 @@ export default {
       console.log(valor)
       
     },
-    handleKeydownAlt(e){
-      console.log(e.key);
-      //this.speak(e.key);
-      if(e.key=="c")
-      {
-        this.$router.push("/cursosEstudiante");
-      }
-    },
+   
+    ////////// Methods captura y voz
 
+    procesarTecladoAlt(response) {
+
+      
+      if (response.event.keyCode == "M".charCodeAt(0)) {
+        
+        this.$t("homeMenu").forEach(element => {
+          this.$refs.componenteSpeak.quickSpeak(element)
+        });  
+      }
+
+      if (response.event.keyCode == "C".charCodeAt(0)) {
+        this.$router.push('/cursosEstudiante')
+      }
+
+      if (response.event.keyCode == "H".charCodeAt(0)) {
+        this.$t("homeHelp").forEach(element => {
+          this.$refs.componenteSpeak.quickSpeak(element)
+        }); 
+      }      
+
+      if (response.event.keyCode == "X".charCodeAt(0)) {
+          this.$refs.componenteSpeak.pauseSpeak()
+      }      
+
+      if (response.event.keyCode == "Y".charCodeAt(0)) {
+        
+          this.$refs.componenteSpeak.resumeSpeak()        
+      }      
+
+      if (response.event.keyCode == "Z".charCodeAt(0)) {
+        this.$refs.componenteSpeak.restartSpeak()
+      }      
+      
+    },
+    activateVoiceComponent() {
+      setTimeout(() => {
+          this.$t("homeMenu").forEach(element => {
+            this.$refs.componenteSpeak.quickSpeak(element)
+            console.log(element)
+          });
+
+        //this.reproducir=true
+        }, 2000);
+    },
+    
   },
 };
 </script>

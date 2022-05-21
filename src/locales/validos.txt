@@ -1,0 +1,21 @@
+alt + a
+alt +B
+alt+c
+alt+G 
+alt+h
+alt+i
+alt+j
+alt+k
+alt+L
+alt+m
+alt+n
+alt+o
+alt+q
+alt+r
+alt+s
+alt+t
+alt+U
+alt+w
+alt+x
+alt+y
+alt+z

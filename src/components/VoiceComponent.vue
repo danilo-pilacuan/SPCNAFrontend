@@ -5,6 +5,7 @@
       v-model="dataReproducir"
       :voice="synthVoice"
       :text="dataTexto"
+      :rate="0.7"
       @list-voices="listVoices"
     /> 
     </div>
@@ -71,6 +72,20 @@ export default {
         
   },
     methods:{
+      quickSpeak(texttospeak) {
+        //console.log("start spk")
+        if (texttospeak !== "") {
+          var utterThis = new SpeechSynthesisUtterance(texttospeak);
+          
+          
+          utterThis.voice = this.synthVoice;
+          utterThis.rate = 0.75;
+          utterThis.pitch = 1;
+          var synth = window.speechSynthesis
+          synth.speak(utterThis);
+          //console.log(selectedOption);
+        }
+      },
       startSpeak()
       {
         this.dataReproducir=true
@@ -83,30 +98,70 @@ export default {
       {
         this.dataReproducir=!this.dataReproducir
       },
+      restartSpeak()
+      {
+        var synth = window.speechSynthesis;
+
+        synth.cancel()
+
+        
+        
+      },
       pauseSpeak()
-    {
-      var synth = window.speechSynthesis;
-      synth.pause();
-    },
-    resumeSpeak()
-    {
-      var synth = window.speechSynthesis;
-      synth.resume();
-    },
+      {
+        var synth = window.speechSynthesis;
+        synth.pause();
+      },
+      resumeSpeak()
+      {
+        var synth = window.speechSynthesis;
+        synth.resume();
+      },
         listVoices (list) {
           console.log(list)
-      if(this.voiceList.length<1)
-      {
-          this.$store.dispatch("setVoiceList", list)
-      }
-      if(this.synthVoice!=null)
-      {
-          if(this.voiceList.length>1)
+        if(this.voiceList)
+        {
+          if(this.voiceList.length<1)
           {
-              this.$store.dispatch("setSynthVoice", this.voiceList.find(element=>element.lang.includes("es-MX")==true))
+              this.$store.dispatch("setVoiceList", list)
+              //this.$store.dispatch("setVoiceList", window.SpeechSynthesis)
           }
-          
-      }
+        }
+        else
+        {
+
+          this.$store.dispatch("setVoiceList", list)
+        }
+        if(this.synthVoice!=null)
+        {
+            if(this.voiceList.length>1)
+            {
+                if(this.$browserDetect.isEdge)
+                {
+                  this.$store.dispatch("setSynthVoice", this.voiceList.find(element=>element.lang.includes("es-MX")==true))
+                }
+
+                if(this.$browserDetect.isChrome)
+                {
+                  this.$store.dispatch("setSynthVoice", this.voiceList.find(element=>element.lang.includes("es-ES")==true))
+                }
+
+                if(this.$browserDetect.isFirefox)
+                {
+                  this.$store.dispatch("setSynthVoice", this.voiceList.find(element=>element.lang.includes("Spanish (Latin America)")==true))
+                }
+
+                // console.log("Chrome")
+                // console.log(this.$browserDetect.isChrome)
+                // console.log("Edge")
+                // console.log(this.$browserDetect.isEdge)
+                // console.log("Firefox")
+                // console.log(this.$browserDetect.isFirefox)
+            }
+            
+        }
+        
+      
     //   this.voiceList = 
       
     //   this.synthVoice=
@@ -122,6 +177,15 @@ export default {
     mounted(){
         console.log("Voice")
         console.log(this.voiceList)
+        // if(!this.voiceList)
+        // {
+        //   while(!this.voiceList)
+        //   {
+        //     this.voiceList=window.speechSynthesis.getVoices();
+        //   }
+        //   console.log("listtt")
+        //   console.log(this.voiceList)
+        // }
         console.log("Synth Voice")
         console.log(this.synthVoice)
         

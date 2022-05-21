@@ -8,7 +8,7 @@ import VueMathjax from 'vue-mathjax'
 import '@mdi/font/css/materialdesignicons.css'
 import i18n from './i18n'
 
-
+import browserDetect from "vue-browser-detect-plugin";
 
 
 
@@ -22,6 +22,7 @@ Vue.use(Buefy)
 Vue.use(VueMathjax)
 Vue.use(VueCookies)
 Vue.use(VueWebSpeech)
+Vue.use(browserDetect);
 
 
 new Vue({

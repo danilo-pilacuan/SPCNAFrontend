@@ -1,0 +1,21 @@
+Alt + Shift + B Set focus on the first item in the favorites bar
+
+Alt + D Select the URL in the address bar to edit
+
+Alt + E Open the Settings and more "..." menu
+
+Alt + F Open the Settings and more "..." menu
+
+Alt + Shift + I Open the Send feedback dialog
+
+Alt + Shift + T Set focus on the first item in the toolbar
+
+Alt Set focus on the Settings and more "…" button
+
+Alt + Left arrow Go back
+
+Alt + Right arrow Go forward
+
+Alt + Home Open your home page in the current tab
+
+Alt + F4 Close the current window

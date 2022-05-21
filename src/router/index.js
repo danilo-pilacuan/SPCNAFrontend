@@ -1,5 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '.././store'
+
+//import store from './store'
+
 import Home from '@/views/Home'
 import Login from '@/views/Login'
 import Register from '@/views/Register'
@@ -127,6 +131,10 @@ const routes = [
         path :'fileexplorer',
         component: () => import('@/components/FileExplorer'),
       },
+      {
+        path :'revisarActividad',
+        component: () => import('@/views/TeacherReviewTask.vue'),
+      },
     ]
   },
 
@@ -150,5 +158,10 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+router.beforeEach(async (to, from, next) => {
+  await store.restored;
+  next();
+});
 
 export default router

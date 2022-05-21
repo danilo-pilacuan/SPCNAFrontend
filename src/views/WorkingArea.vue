@@ -1,25 +1,16 @@
 <template>
   <div class="home" tabindex="0" @keydown.alt="procesarTecladoAlt" @keydown.exact="capturarTeclado" v-if="fileInput">
+<!--
+  TODO: hacer menu mas interactivo con flechas y out por out
+     -->
+    <VoiceComponent ref="componenteSpeak" :texto="texto" :reproducir="reproducir"
+    @onTexto="emitTexto"
+    @onReproducir="emitReproducir"
+    ></VoiceComponent>
+
     <section class="section p-0">
       <div class="container">
-        <!-- <div class="block">
-          <p class="title">Actividades</p>
-
-          <div class="block">
-            <div class="grid-content bg-purple">
-              <label for="pitch">Pitch</label>
-              <input id="pitch" name="pitch" type="range" min="0" max="1" step="0.05" v-model="valuePitch" />
-              <label for="rate">Rate</label>
-              <input id="rate" name="rate" type="range" min="-3" max="3" step="0.25" v-model="valueRate" />
-              <label v-show="false">Idioma</label>
-              <div class="grid-content bg-purple">
-                <select v-model="valueSelVoices" placeholder="Select" v-show="true" :selected="valueSelVoices.name" >
-                  <option v-for="voice in voicesSpeech" :key="voice.voiceURI" :value="voice" > {{ voice.name }} </option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div> -->
+        
         <div class="block m-0 has-text-left">
           <div class="columns is-vcentered mb-0 p-0">
             <!-- <div class="column is-1">
@@ -189,7 +180,7 @@
             <b-button type="is-dark" @click="handleSwapTextCode"
               ><b-icon icon="swap-horizontal"></b-icon
             ></b-button>
-            <b-button type="is-dark" @click="procesarScc = true"
+            <b-button type="is-dark"
               ><b-icon icon="content-cut"></b-icon
             ></b-button>
             <!-- <div class="is-divider-vertical"></div> -->
@@ -219,11 +210,7 @@
           </div>
         </div>
 
-        <!-- <vue-mathjax :formula="formula"></vue-mathjax> -->
-        <!-- <notebook-cell
-          v-for="(nbCell, index) in arrayNoteBookCell"
-          :key="index"
-        /> -->
+    
 
         <div
           class="cellContainer"
@@ -259,7 +246,6 @@
                       </div>
                       <div class="column outputCol2">
                         <vue-mathjax :formula="resultado.salida"></vue-mathjax>
-                                    <!-- <b-button type="is-primary" @click="reproducirSalida(resultado.entradaScript,resultado.salidaScript,index,index3)">Reproducir</b-button> -->
                       </div>
                     </div>
                   </div>
@@ -277,6 +263,7 @@
 <script>
 import { VueMathjax } from "vue-mathjax";
 import NotebookCell from "../components/NotebookCell";
+import VoiceComponent from '/src/components/VoiceComponent'
 
 export default {
   props:
@@ -287,6 +274,7 @@ export default {
   },
   components: {
     NotebookCell: NotebookCell,
+    VoiceComponent: VoiceComponent,
   },
   watch: {
     fileInput (newValue) {
@@ -302,37 +290,17 @@ export default {
   },
 
   data() {
-    return {
-      hello: "hello world",
-      textarea:
-        "solve(x^2+4*x+4)\nexpand((x+y+z)^3)\node2('diff(y,x)+3*x*y = sin(x)/x,y,x)\nsum(f(i),i,0,m) * sum(g(j),j,0,n)",
-      value: 0,
-      procesarScc: false,
-      valueSelVoices: [],
-      valuePitch: 0.5,
+    return {      
       currentCell: 0,
-      text: "Hola",
-      valueRate: 0,
-      synth: [],
-      formula: "$$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$",
-      resultadoMaxima: "",
-      valueVolume: 50,
-      voicesSpeech: [],
       arrayNoteBookCell: [
         { entrada: "", salida:"", ejecutar: false, activeCell: true,isTextCell:false },
       ],
-      menuOpciones : [
-        "Presiona alt más w para escribir en celda actual",
-        "Presione alt más R para ejecutar celda actual",
-        "Presione alt más Pe para escuchar celda actual",
-        "Presione alt más C para crear nueva celda",
-        "Presione alt más Q para subir celda",
-        "Presione alt más Ye para bajar celda",
-        "Presione alt más flecha arriba para seleccionar opcion siguiente",
-        "Presione alt más flecha abajo para seleccionar opcion anterior",
-        "Presione alt más M para escuchar menú nuevamente",
-        "Presione alt mas H para ayuda"
-      ]
+      menuOpciones : this.$t('workingAreaMenu'),
+      currentOut:0,
+
+      // vars for voiceComponent
+      texto: this.$t('workingAreaMenu'), 
+      reproducir:false,
     };
   },
   methods: {
@@ -340,10 +308,11 @@ export default {
       console.log("con alt");
       console.log(e.key);
       if (e.key == "m") {
-        for (var i = 0; i < this.menuOpciones.length; i++) {
-          //console.log(this.menuOpciones[i])
-          this.speak(this.menuOpciones[i])
-        }
+        
+        this.$t("workingAreaMenu").forEach(element => {
+          this.$refs.componenteSpeak.quickSpeak(element)
+        });
+        
       }
       else if(e.key == "w")
       {
@@ -354,8 +323,9 @@ export default {
       {
         this.ejecutarTodas()
       }
-      else if(e.key == "p")
+      else if(e.key == "l")
       {
+        console.log("EscucharCelda")
         this.escucharCelda()
       }
       else if(e.key == "c")
@@ -377,38 +347,58 @@ export default {
     },
     escucharCelda()
     {
+      this.texto=""
       if(this.arrayNoteBookCell[this.currentCell].isTextCell)
       {
-        this.speak("Celda "+(this.currentCell+1)+" "+this.arrayNoteBookCell[this.currentCell].entrada)
+        //this.speak("Celda "+(this.currentCell+1)+" "+this.arrayNoteBookCell[this.currentCell].entrada)
+        this.texto="Celda "+(this.currentCell+1)+" "+this.arrayNoteBookCell[this.currentCell].entrada
+        console.log("Execute Text")
       }
       else
       {
+        console.log("Execute Code")
         var salidaCurrentCell=this.arrayNoteBookCell[this.currentCell];
         var indexCell=this.currentCell;
         for (var i = 0; i < salidaCurrentCell['salida'].length; i++) {
-          console.log(salidaCurrentCell['salida'][i].entradaScript)
+          console.log("Execute For")
+          //console.log(salidaCurrentCell['salida'][i].entradaScript)
 
           const auxEntradaScript=salidaCurrentCell['salida'][i].entradaSpeech
           const auxSalidaScript=salidaCurrentCell['salida'][i].salidaSpeech
-          //console.log("Celda "+(this.currentCell+1)+" Entrada "+(i+1))
-          this.speak("Celda "+(this.currentCell+1)+" Entrada "+(i+1))
-          this.speak(auxEntradaScript);
-          this.speak("Celda "+(this.currentCell+1)+" Salida "+(i+1))
-          this.speak(auxSalidaScript);  
-          //////////
+          
+          //this.speak()
+          //this.speak();
+          this.$refs.componenteSpeak.quickSpeak("Celda "+(this.currentCell+1)+" Entrada "+(i+1))
+          this.$refs.componenteSpeak.quickSpeak(auxEntradaScript)
+          // this.texto=this.texto+". "+"Celda "+(this.currentCell+1)+" Entrada "+(i+1)
+          // this.texto=this.texto+". "+auxEntradaScript
+
+          //this.speak()
+          //this.speak();  
+          this.$refs.componenteSpeak.quickSpeak("Celda "+(this.currentCell+1)+" Salida "+(i+1))
+          this.$refs.componenteSpeak.quickSpeak(auxSalidaScript)
+          // this.texto=this.texto+". "+"Celda "+(this.currentCell+1)+" Salida "+(i+1)
+          // this.texto=this.texto+". "+auxSalidaScript
+          
         }
+        
+        
       }
+      if(this.texto!="")
+      {
+        console.log(this.texto)
+        this.reproducir=true
+      }
+      
       
 
     },
     capturarTeclado(e) {
-      console.log(e.key);
-      this.speak(e.key);
+      
+      this.$refs.componenteSpeak.quickSpeak(e.key)
     },
-    handleClick(e) {
-      console.log("boton press");
-      console.log(this.voicesSpeech);
-    },
+
+
     procesarEmit(valor, valor2) {
       this.currentCell = valor;
       this.arrayNoteBookCell.forEach((element) => {
@@ -445,27 +435,18 @@ export default {
       });
       }
     },
-    handleCelda() {
-      console.log("hc");
-      this.arrayNoteBookCell.forEach((element) => {
-        console.log(element);
-      });
-    },
     emitirSalida(resultado) {
-      console.log(resultado);
+      //console.log(resultado);
 
       this.arrayNoteBookCell[this.currentCell].salida = [];
       for (var i = 0; i < resultado.salida.length; i++) {
         
         this.arrayNoteBookCell[this.currentCell].salida[i] = { entradaScript: resultado.entradaScript[i], salida:resultado.salida[i],entradaSpeech:resultado.entradaSpeech[i],salidaSpeech:resultado.salidaSpeech[i]};
       }
-      // this.arrayNoteBookCell[this.currentCell].entradaScript = resultado.entradaScript;
-      // this.arrayNoteBookCell[this.currentCell].entradaSpeech = resultado.entradaSpeech;
-      // this.arrayNoteBookCell[this.currentCell].salidaSpeech = resultado.salidaSpeech;
 
     },
     procesarFinish(indice) {
-      console.log("finish script");
+      //console.log("finish script");
       this.arrayNoteBookCell[indice].ejecutar = false;
     },
     upActiveCell() {
@@ -523,7 +504,7 @@ export default {
               this.arrayNoteBookCell[idCelda].salida[i] = { entradaScript: resultado.entradaScript[i], salida:resultado.salida[i],entradaSpeech:resultado.entradaSpeech[i],salidaSpeech:resultado.salidaSpeech[i]};
             }
           } catch (e) {
-            this.resultadoMaxima = "Error";
+            
             console.log(e);
           }
         });
@@ -553,14 +534,14 @@ export default {
         })
         .then((myJson) => {
           try {
-            console.log("ResJson")
-            console.log(myJson);
+            //console.log("ResJson")
+            //console.log(myJson);
 
             var resultado = myJson;
             
             this.arrayNoteBookCell[inicio].salida = [];
             for (var i = 0; i < resultado.salida.length; i++) {  
-              console.log("i: "+i)
+              //console.log("i: "+i)
               this.arrayNoteBookCell[inicio].salida[i] = { entradaScript: resultado.entradaScript[i], salida:resultado.salida[i],entradaSpeech:resultado.entradaSpeech[i],salidaSpeech:resultado.salidaSpeech[i]};
             }
             if(inicio<this.arrayNoteBookCell.length-1)
@@ -568,7 +549,7 @@ export default {
               this.ejecutarHaciaAbajoRecursive(inicio+1)
             }
           } catch (e) {
-            this.resultadoMaxima = "Error";
+            
             console.log(e);
           }
         });
@@ -603,7 +584,7 @@ export default {
               this.ejecutarHaciaArribaRecursive(inicio-1)
             }
           } catch (e) {
-            this.resultadoMaxima = "Error";
+            
             console.log(e);
           }
         });
@@ -612,14 +593,6 @@ export default {
       this.ejecutarCeldaById(this.currentCell)
     },
     ejecutarTodas() {
-      // this.arrayNoteBookCell.forEach(element=>{
-      //   element.ejecutar=true
-      // })
-
-      // for(var j=0;j<this.arrayNoteBookCell.length;j++)
-      // {
-      //   this.ejecutarCeldaById(j)
-      // }
       this.ejecutarHaciaAbajoRecursive(0)
       
     },
@@ -641,27 +614,9 @@ export default {
         isTextCell:true
       });
     },
-    speak(texttospeak) {
-      if (texttospeak !== "") {
-        var utterThis = new SpeechSynthesisUtterance(texttospeak);
-        console.log(this.valueSelVoices);
-        var selectedOption = this.valueSelVoices;
-        utterThis.voice = selectedOption;
-        utterThis.rate = Math.pow(
-          Math.abs(this.valueRate) + 1,
-          this.valueRate < 0 ? -1 : 1
-        );
-        utterThis.pitch = this.valuePitch;
-        this.synth.speak(utterThis);
-        console.log(selectedOption);
-      }
-    },
-    handleHelp() {
-      var currentNotebookCell = this.arrayNoteBookCell[0];
-      console.log(currentNotebookCell);
-      Object.keys(currentNotebookCell).forEach((prop) => console.log(prop));
-    },
+    
     abrirScript() {
+      
       let input = document.createElement("input");
       input.type = "file";
       input.onchange = (_) => {
@@ -672,15 +627,15 @@ export default {
         var reader = new FileReader();
         reader.onload = (e) => {
           var contents = e.target.result;
-          console.log(contents);
-          console.log(this.arrayNoteBookCell);
+          //console.log(contents);
+          //console.log(this.arrayNoteBookCell);
           this.arrayNoteBookCell = null;
           this.arrayNoteBookCell = JSON.parse(contents);
-          console.log(this.arrayNoteBookCell);
+          //console.log(this.arrayNoteBookCell);
         };
         reader.readAsText(file);
         // you can use this method to get file and perform respective operations
-        console.log(input.files);
+        //console.log(input.files);
         // let files =   Array.from(input.files);
         // console.log(files[0]);
         // let jsonData = JSON.stringify(files[0])
@@ -712,6 +667,32 @@ export default {
         document.body.removeChild(a);
       }
     },
+
+
+    ////Methods for voice
+
+    activateVoiceComponent() {
+      setTimeout(() => {
+          this.texto.forEach(element => {
+            this.$refs.componenteSpeak.quickSpeak(element)
+            console.log(element)
+          });
+
+        //this.reproducir=true
+        }, 2000);
+    },
+    emitTexto(valor, valor2) {
+      console.log("Procesar Texto")
+      this.texto=valor
+      console.log(valor)
+      
+    },
+    emitReproducir(valor, valor2) {
+      this.reproducir=valor
+      console.log("Procesar CT")
+      console.log(valor)
+      
+    },
   },
   computed: {
     authenticated() {
@@ -725,16 +706,22 @@ export default {
     },
     currentUser(){
         return this.$store.state.currentUser;
-    }
+    },
+    enableAudio(){
+        return this.$store.state.enableAudio;
+    },
+    synthVoice() {
+      return this.$store.state.synthVoice;
+    },
   },
   created() {
-    console.log("component created");
+    
     //this.$refs.editor.focus();
-    var voicesSpeech = window.speechSynthesis.getVoices();
-    var synth = window.speechSynthesis;
+    
+    
   },
   beforeMount(){
-        console.log("Params sscs")
+        
         console.log(this.$route.params)
         if(this.fileInput)
         {
@@ -746,70 +733,16 @@ export default {
   },
   
   mounted() {
+    console.log("MenuWorkingArea------------------------")
+    console.log(this.$t('workingAreaMenu'))
 
-//     let promesaVoces = new Promise((resolve, reject)=>{
-//       setTimeout(function(){
-//     resolve("¡Éxito! " + this.formula); // ¡Todo salió bien!
-//   }, 500);
-//     });
+    if(this.enableAudio==true)
+    {
+      //this.texto=this.texto.join()
+      //this.texto="Inicio Area de trabajo"
 
-//     promesaVoces.then((successMessage) => {
-//   // succesMessage es lo que sea que pasamos en la función resolve(...) de arriba.
-//   // No tiene por qué ser un string, pero si solo es un mensaje de éxito, probablemente lo sea.
-//   console.log("¡Sí! " + successMessage);
-// });
-
-    
-
-    //this.$refs.editor.focus();
-    this.voicesSpeech = window.speechSynthesis.getVoices();
-    console.log("Voces: ")
-    var formData = new FormData();
-      
-      formData.append("tiempoMS", (1000*4).toString());
-      fetch("http://localhost:8000/demorarEjecucion", {
-        method: "POST", // or 'PUT'
-        body: formData, // data can be `string` or {object}!
-      })
-        .then((response) => {
-          return response.json();
-        })
-        .then((myJson) => {
-          
-          this.voicesSpeech.forEach(element=>{
-      //console.log(element)
-      if(element.name.toLowerCase().search("spanish")>=0 || element.name.toLowerCase().search("español")>=0)
-      {
-        console.log(element.name);
-        this.valueSelVoices = element;
-      }
-    });
-    
-    // if (this.voicesSpeech[0]) {
-    //   console.log("esp");
-
-    //   this.valueSelVoices = this.voicesSpeech[57];
-    //   console.log(this.valueSelVoices);
-    // } else {
-    //   console.log("no esp");
-    //   this.valueSelVoices = "";
-    // }
-    if (true) {
-      this.speak(
-        "Presione alt más M para escuchar Menú"
-      );
-    } else {
-      console.log("unauthenticated");
+      //this.activateVoiceComponent()
     }
-
-
-        });
-
-    this.synth = window.speechSynthesis;
-    console.log("Voces: ")
-    //console.log(window.speechSynthesis.getVoices())
-
-    
   },
 };
 </script>

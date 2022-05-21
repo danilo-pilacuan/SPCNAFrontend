@@ -88,9 +88,7 @@ export default {
     console.log(this.authenticated);
     console.log(this.userType);
     if (this.authenticated == true && this.userType == 3) {
-      this.speak(
-        "Bienvenido, presione alt mas w para ir al area de trabajo o alt mas ye para recibir ayuda"
-      );
+      
     } else {
       console.log(this.authenticated);
       console.log(this.userType);

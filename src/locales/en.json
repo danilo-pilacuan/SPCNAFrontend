@@ -2,5 +2,19 @@
     "hello": "Hello i18n in SFC!",
     "welcome": "Welcome!",
     "yes-button": "Yes",
-    "no-button": "No!"
+    "no-button": "No!",
+    "ayudaHome": "Bienvenido, Presse alt mas C para acceder a sus cursos o alt mas ye para recibir ayuda",
+    "workingAreaMenu": [
+        "Pressa alt más w para escribir en celda actual",
+        "Presse alt más R para ejecutar celda actual",
+        "Presse alt más Pe para escuchar celda actual",
+        "Presse alt más C para crear nueva celda",
+        "Presse alt más Q para subir celda",
+        "Presse alt más Ye para bajar celda",
+        "Presse alt más flecha arriba para seleccionar opcion siguiente",
+        "Presse alt más flecha abajo para seleccionar opcion anterior",
+        "Presse alt más M para escuchar menú nuevamente",
+        "Presse alt mas H para ayuda"
+      ]
+      
 }

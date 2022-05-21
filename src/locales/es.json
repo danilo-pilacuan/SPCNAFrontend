@@ -4,6 +4,60 @@
     "yes-button": "Si",
     "no-button": "No",
 
-    "ayudaHome": "Bienvenido, presione alt mas C para acceder a sus cursos o alt mas ye para recibir ayuda"
+    "ayudaHome": "Bienvenido, presione shift mas alt mas C para acceder a sus cursos o alt mas ye para recibir ayuda",
+    "homeMenu":[
+        "Menú Inicio, presione alt mas se para acceder a sus cursos o alt mas h para recibir ayuda"
+    ],
+    "homeHelp":[
+        "Ayuda:",
+        "El sistema proporciona ayudas auditivas para su correcta utilización",
+        "Presione alt más eme para escuchar el menú correspondiente a la ventana actual",
+        "Presione alt más equis para pausar los comandos de voz",
+        "Presione alt más ye para reanudar el último comando de voz",
+        "Presione alt más z para reiniciar el último comando de voz",
+        "Presione alt más L para cerrar su sesión"
+    ],
+    "workingAreaMenu": [
+        "Presiona alt más w para escribir en celda actual..... ",
+        "Presione alt más R para ejecutar celda actual..... ",
+        "Presione alt más ele para escuchar celda actual..... ",
+        "Presione alt más P para leer la pantalla actual",
+        "Presione alt más C para crear nueva celda..... ",
+        "Presione alt más Q para subir celda..... ",
+        "Presione alt más Ye para bajar celda..... ",
+        "Presione alt más flecha arriba para seleccionar opcion siguiente..... ",
+        "Presione alt más flecha abajo para seleccionar opcion anterior..... ",
+        "Presione alt más M para escuchar menú nuevamente..... ",
+        "Presione alt mas H para ayuda..... "
+    ],
+    "workingAreaMenu2": [
+        "Presiona alt más i continuar celda..... ",
+        "Presione alt más u para volver a escuchar celca actual..... "
+    ],
+    "workingAreaMenu3": [
+        "Presiona alt más t para escuchar siguiente salida..... ",
+        "Presione alt más A para repetir salida actual..... "
+    ],
+    "workingAreaMenu4": [
+        "No hay más salidas en la celda actual..... ",
+        "Presione alt más equis para avanzar a la siguiente celda"
+    ],
+    "workingAreaMenu5": [
+        "No hay más celdas a continuación..... ",
+        "Presione alt más be para escuchar desde el principio"
+    ],
+    "StudentCourseViewMenu": [
+        "Bienvenido, presione alt mas w para ir al area de trabajo o alt mas ye para recibir ayuda"
+    ],
+    "CoursesStudent":
+    [
+        "Presione alt mas eme para escuchar la lista de cursos",
+        "Presione alt mas flecha arriba para rotar curso seleccionado hacia arriba",
+        "Presione alt mas flecha abajo para rotar curso seleccionado hacia abajo",
+        "Presione alt mas A para escuchar curso seleccionado actualmente",
+        "Presione alt mas flecha atras para regresar a la ventana anterior",
+        "Presione alt mas H para ayuda..... "
+
+    ]
     
 }
