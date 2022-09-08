@@ -233,7 +233,7 @@ export default {
       this.showModalDelete=true
     },
     submitCreate(){
-      fetch("http://localhost:5000/api/lessons", {
+      fetch(process.env.VUE_APP_BACKEND+":5000/api/lessons", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
@@ -257,7 +257,7 @@ export default {
           });
     },
     submitDelete(){
-      fetch("http://localhost:5000/api/lessons/"+this.deleteSelectedLesson._id, {
+      fetch(process.env.VUE_APP_BACKEND+":5000/api/lessons/"+this.deleteSelectedLesson._id, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -274,9 +274,9 @@ export default {
         
     },
     fetchData() {
-      console.log("http://localhost:5000/api/lessons/course/"+this.selectedCourse._id)
+      console.log(process.env.VUE_APP_BACKEND+":5000/api/lessons/course/"+this.selectedCourse._id)
       try {
-        fetch("http://localhost:5000/api/lessons/course/"+this.selectedCourse._id, {
+        fetch(process.env.VUE_APP_BACKEND+":5000/api/lessons/course/"+this.selectedCourse._id, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
           credentials: "include",

@@ -27,7 +27,7 @@ export default {
         authLogin() {
             console.log("UserHandle")
             try {
-                fetch("http://localhost:5000/api/users/get", {
+                fetch(process.env.VUE_APP_BACKEND+":5000/api/users/get", {
                 method: "GET",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",

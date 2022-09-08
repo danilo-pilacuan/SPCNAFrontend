@@ -251,7 +251,7 @@ export default {
     
     fetchUsers() {
       try {
-        fetch("http://localhost:5000/api/users/getAll", {
+        fetch(process.env.VUE_APP_BACKEND+":5000/api/users/getAll", {
           method: "GET",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
@@ -310,7 +310,7 @@ export default {
 
     submit() {
       if (this.isAddUser) {
-        fetch("http://localhost:5000/api/users", {
+        fetch(process.env.VUE_APP_BACKEND+":5000/api/users", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",

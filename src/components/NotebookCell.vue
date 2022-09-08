@@ -179,7 +179,7 @@ export default {
       var formData = new FormData();
       var scriptAreaTxt = this.valorTextArea;
       formData.append("scriptTxt", scriptAreaTxt);
-      fetch("http://localhost:8000/procesarScript", {
+      fetch(process.env.VUE_APP_BACKEND+":8000/procesarScript", {
         method: "POST", // or 'PUT'
         body: formData, // data can be `string` or {object}!
       })

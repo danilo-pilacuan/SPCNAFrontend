@@ -40,7 +40,7 @@ export default {
     methods: {
         fetchCourse() {
         try {
-            fetch("http://localhost:5000/api/courses/"+this.courseId, {
+            fetch(process.env.VUE_APP_BACKEND+":5000/api/courses/"+this.courseId, {
             method: "GET",
             headers: { "Content-Type": "application/json" },
             credentials: "include",

@@ -125,7 +125,7 @@ export default {
   methods:{
     fetchCourses() {
       try {
-        fetch("http://localhost:5000/api/courses", {
+        fetch(process.env.VUE_APP_BACKEND+":5000/api/courses", {
           method: "GET",
           headers: { "Content-Type": "application/json" },
           credentials: "include",

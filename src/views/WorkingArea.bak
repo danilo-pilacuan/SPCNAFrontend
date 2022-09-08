@@ -369,7 +369,7 @@ export default {
       var formData = new FormData();
       
       formData.append("tiempoMS", (1000*indexCommand).toString());
-      fetch("http://localhost:8000/demorarEjecucion", {
+      fetch(process.env.VUE_APP_BACKEND+":8000/demorarEjecucion", {
         method: "POST", // or 'PUT'
         body: formData, // data can be `string` or {object}!
       })
@@ -413,7 +413,7 @@ export default {
       var formData = new FormData();
       var latexTxt = stringLatex;
       formData.append("latexTxt", latexTxt);
-      fetch("http://localhost:8000/procesarLatex", {
+      fetch(process.env.VUE_APP_BACKEND+":8000/procesarLatex", {
         method: "POST", // or 'PUT'
         body: formData, // data can be `string` or {object}!
       })
@@ -451,7 +451,7 @@ export default {
       var formData = new FormData();
       var latexTxt = stringLatex;
       formData.append("latexTxt", latexTxt);
-      fetch("http://localhost:8000/procesarLatex", {
+      fetch(process.env.VUE_APP_BACKEND+":8000/procesarLatex", {
         method: "POST", // or 'PUT'
         body: formData, // data can be `string` or {object}!
       })
@@ -511,7 +511,7 @@ export default {
       formData.append("scriptTxt", latexEntrada);
       console.log("formData")
       console.log(formData)
-      fetch("http://localhost:8000/procesarScript", {
+      fetch(process.env.VUE_APP_BACKEND+":8000/procesarScript", {
         method: "POST", // or 'PUT'
         body: formData, // data can be `string` or {object}!
       })
@@ -647,7 +647,7 @@ export default {
     },
     authLogin() {
       try {
-        fetch("http://localhost:5000/api/users/get", {
+        fetch(process.env.VUE_APP_BACKEND+":5000/api/users/get", {
           method: "GET",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
@@ -674,7 +674,7 @@ export default {
       var formData = new FormData();
       var scriptAreaTxt = this.textarea;
       formData.append("scriptTxt", scriptAreaTxt);
-      fetch("http://localhost:8000/procesarScript", {
+      fetch(process.env.VUE_APP_BACKEND+":8000/procesarScript", {
         method: "POST", // or 'PUT'
         body: formData, // data can be `string` or {object}!
       })
@@ -813,7 +813,7 @@ export default {
     var formData = new FormData();
       
       formData.append("tiempoMS", (1000*4).toString());
-      fetch("http://localhost:8000/demorarEjecucion", {
+      fetch(process.env.VUE_APP_BACKEND+":8000/demorarEjecucion", {
         method: "POST", // or 'PUT'
         body: formData, // data can be `string` or {object}!
       })

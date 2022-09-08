@@ -76,7 +76,7 @@ export default {
     },
     fetchCourses() {
       try {
-        fetch("http://localhost:5000/api/courses/owner/"+this.currentUser._id, {
+        fetch(process.env.VUE_APP_BACKEND+":5000/api/courses/owner/"+this.currentUser._id, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
           credentials: "include",

@@ -202,7 +202,7 @@ export default {
       this.showModalDelete=true
     },
     submitCreate(){
-      fetch("http://localhost:5000/api/scripts/", {
+      fetch(process.env.VUE_APP_BACKEND+":5000/api/scripts/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -239,7 +239,7 @@ export default {
       this.$router.push({name: 'areatrabajo', params: { fileInput: this.fileInput}});
     },
     submitDelete(){
-      fetch("http://localhost:5000/api/scripts/"+this.deleteSelectedFile._id, {
+      fetch(process.env.VUE_APP_BACKEND+":5000/api/scripts/"+this.deleteSelectedFile._id, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -257,7 +257,7 @@ export default {
     },
     fetchData() {
       try {
-        fetch("http://localhost:5000/api/scripts/course/"+this.selectedCourse._id, {
+        fetch(process.env.VUE_APP_BACKEND+":5000/api/scripts/course/"+this.selectedCourse._id, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
           credentials: "include",

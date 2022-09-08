@@ -275,7 +275,7 @@ export default {
   methods: {
     fetchCourses() {
       try {
-        fetch("http://localhost:5000/api/courses/owner/"+this.currentUser._id, {
+        fetch(process.env.VUE_APP_BACKEND+":5000/api/courses/owner/"+this.currentUser._id, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
@@ -324,7 +324,7 @@ export default {
     },
     submitDelete()
     {
-      fetch("http://localhost:5000/api/courses/"+this.deleteSelectedCourse._id, {
+      fetch(process.env.VUE_APP_BACKEND+":5000/api/courses/"+this.deleteSelectedCourse._id, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -342,7 +342,7 @@ export default {
     },
     submit() {
       if (this.isAddCourse) {
-        fetch("http://localhost:5000/api/courses", {
+        fetch(process.env.VUE_APP_BACKEND+":5000/api/courses", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -365,8 +365,8 @@ export default {
         
         this.fetchCourses()
       } else if (this.isEditCourse) {
-        console.log("http://localhost:5000/api/courses/"+this.editSelectedCourse._id)
-        fetch("http://localhost:5000/api/courses/"+this.editSelectedCourse._id, {
+        console.log(process.env.VUE_APP_BACKEND+":5000/api/courses/"+this.editSelectedCourse._id)
+        fetch(process.env.VUE_APP_BACKEND+":5000/api/courses/"+this.editSelectedCourse._id, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

@@ -277,7 +277,7 @@ export default {
       {
         if(!this.isEditTask)
         {
-          fetch("http://localhost:5000/api/Tasks", {
+          fetch(process.env.VUE_APP_BACKEND+":5000/api/Tasks", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
@@ -302,7 +302,7 @@ export default {
         }
         else
         {
-          fetch("http://localhost:5000/api/Tasks/"+this.selectedTask._id, {
+          fetch(process.env.VUE_APP_BACKEND+":5000/api/Tasks/"+this.selectedTask._id, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             credentials: "include",

@@ -140,7 +140,7 @@ export default {
     fetchLessons()
     {
         try {
-            fetch("http://localhost:5000/api/lessons/course/"+this.selectedCourse._id, {
+            fetch(process.env.VUE_APP_BACKEND+":5000/api/lessons/course/"+this.selectedCourse._id, {
             method: "GET",
             headers: { "Content-Type": "application/json" },
             credentials: "include",

@@ -208,7 +208,7 @@ export default {
 
     },
     guardarAlumnos() {
-      fetch("http://localhost:5000/api/courses/adduserstocourse/"+this.selectedCourse._id, {
+      fetch(process.env.VUE_APP_BACKEND+":5000/api/courses/adduserstocourse/"+this.selectedCourse._id, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -229,7 +229,7 @@ export default {
     },
     fetchAlumnos() {
       try {
-        fetch("http://localhost:5000/api/users/getAlumnos", {
+        fetch(process.env.VUE_APP_BACKEND+":5000/api/users/getAlumnos", {
           method: "GET",
           headers: { "Content-Type": "application/json" },
           credentials: "include",

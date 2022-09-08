@@ -110,7 +110,7 @@ export default {
     methods:{
         logout(){
             console.log("logout")
-            fetch("http://localhost:5000/api/users/logout", {
+            fetch(process.env.VUE_APP_BACKEND+":5000/api/users/logout", {
                 method: "POST",
                 headers: {"Content-Type":"application/json"},
                 credentials: "include"

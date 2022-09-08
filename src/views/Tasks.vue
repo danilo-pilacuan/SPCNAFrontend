@@ -162,7 +162,7 @@ export default {
       this.showModalDelete=true
     },
     submitDelete(){
-      fetch("http://localhost:5000/api/tasks/"+this.deleteSelectedTask._id, {
+      fetch(process.env.VUE_APP_BACKEND+":5000/api/tasks/"+this.deleteSelectedTask._id, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -180,9 +180,9 @@ export default {
         
     },
     fetchData() {
-      console.log("http://localhost:5000/api/Tasks/course/"+this.selectedCourse._id)
+      console.log(process.env.VUE_APP_BACKEND+":5000/api/Tasks/course/"+this.selectedCourse._id)
       try {
-        fetch("http://localhost:5000/api/Tasks/course/"+this.selectedCourse._id, {
+        fetch(process.env.VUE_APP_BACKEND+":5000/api/Tasks/course/"+this.selectedCourse._id, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
           credentials: "include",

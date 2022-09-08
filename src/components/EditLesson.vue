@@ -122,7 +122,7 @@ export default {
         console.log("Sumbit Lesson 1")
         if(!this.isEditLesson)
         {
-          fetch("http://localhost:5000/api/lessons", {
+          fetch(process.env.VUE_APP_BACKEND+":5000/api/lessons", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
@@ -148,7 +148,7 @@ export default {
         else
         {
           console.log("Sumbit Lesson 2")
-          fetch("http://localhost:5000/api/lessons/"+this.selectedLesson._id, {
+          fetch(process.env.VUE_APP_BACKEND+":5000/api/lessons/"+this.selectedLesson._id, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             credentials: "include",

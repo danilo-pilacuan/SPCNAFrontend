@@ -412,7 +412,7 @@ export default {
     {
       if(this.fileInputData)
       {
-        fetch("http://localhost:5000/api/scripts/"+this.fileInputData._id, {
+        fetch(process.env.VUE_APP_BACKEND+":5000/api/scripts/"+this.fileInputData._id, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -485,7 +485,7 @@ export default {
         var formData = new FormData();
       var scriptAreaTxt = this.arrayNoteBookCell[idCelda].entrada;
       formData.append("scriptTxt", scriptAreaTxt);
-      fetch("http://localhost:8000/procesarScript", {
+      fetch(process.env.VUE_APP_BACKEND+":8000/procesarScript", {
         method: "POST", 
         body: formData, 
       })
@@ -526,7 +526,7 @@ export default {
         var formData = new FormData();
       var scriptAreaTxt = this.arrayNoteBookCell[inicio].entrada;
       formData.append("scriptTxt", scriptAreaTxt);
-      fetch("http://localhost:8000/procesarScript", {
+      fetch(process.env.VUE_APP_BACKEND+":8000/procesarScript", {
         method: "POST", 
         body: formData, 
       })
@@ -561,7 +561,7 @@ export default {
       var formData = new FormData();
       var scriptAreaTxt = this.arrayNoteBookCell[inicio].entrada;
       formData.append("scriptTxt", scriptAreaTxt);
-      fetch("http://localhost:8000/procesarScript", {
+      fetch(process.env.VUE_APP_BACKEND+":8000/procesarScript", {
         method: "POST", 
         body: formData, 
       })
