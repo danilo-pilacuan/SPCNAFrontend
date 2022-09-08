@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <UserHandle/>
+    <!-- <UserHandle/> -->
     <Nav />
     
     <router-view/>
@@ -11,12 +11,12 @@
 
 import Nav from '../src/components/Nav'
 import Footer from '../src/components/Footer'
-import UserHandle from '../src/components/UserHandle'
+// import UserHandle from '../src/components/UserHandle'
 export default {
   components: {
     "Nav": Nav,
     "Footer" : Footer,
-    "UserHandle": UserHandle
+    // "UserHandle": UserHandle
   }
 }
 </script>

@@ -1,5 +1,13 @@
 <template>
   <div id="home" tabindex="-1" @keydown.alt="handleKeydownAlt">
+    <UserHandle/> 
+    <Keypress key-event="keyup" :multiple-keys="multiple" @success="procesarTecladoAlt" @wrong="logwrong"/>
+
+    <VoiceComponent ref="componenteSpeak" :texto="texto" :reproducir="reproducir"
+    @onTexto="emitTexto"
+    @onReproducir="emitReproducir"
+    ></VoiceComponent>
+
     <div class="container"> <!-- v-show="userType == 2 || userType == 3">-->
       <div class="block" @click="selectLessons()">
         <div class="columns">
@@ -58,9 +66,78 @@
 </template>
 
 <script>
+import VoiceComponent from '/src/components/VoiceComponent'
+import UserHandle from '../components/UserHandle.vue'
+
 export default {
+  components: {
+    VoiceComponent: VoiceComponent,
+    "UserHandle": UserHandle,
+    Keypress: () => import('vue-keypress')
+  },
   data() {
     return {
+      //necesarios para voiceComponent
+      texto:"Prueba texto", //"Bienvenido, presione alt mas w para ir al area de trabajo o alt mas ye para recibir ayuda",
+      reproducir:false,
+
+      //Necesarios para keypress
+      pressedKeyCode: null,
+      multiple: [
+        {
+          keyCode: "B".charCodeAt(0), // 
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "M".charCodeAt(0), // 
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "C".charCodeAt(0), // 
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "A".charCodeAt(0), // 
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "H".charCodeAt(0), // H
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "X".charCodeAt(0), // H
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "Y".charCodeAt(0), // H
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "Z".charCodeAt(0), // H
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: 38,
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: 40,
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+      ],
+
+
+      // Component Data
       test: false,
       hello: "hello world",      
       value: 0,
@@ -74,26 +151,8 @@ export default {
   },
   mounted() {
 
-    this.voicesSpeech = window.speechSynthesis.getVoices();
-    this.synth = window.speechSynthesis;
-    if (this.voicesSpeech[0]) {
-      console.log("esp");
-
-      this.valueSelVoices = this.voicesSpeech[24];
-      console.log(this.valueSelVoices);
-    } else {
-      console.log("no esp");
-      this.valueSelVoices = "";
-    }
-    console.log(this.authenticated);
-    console.log(this.userType);
-    if (this.authenticated == true && this.userType == 3) {
-      
-    } else {
-      console.log(this.authenticated);
-      console.log(this.userType);
-      console.log("unauthenticated");
-    }
+    this.activateVoiceComponent()
+    
   },
   computed: {
     authenticated() {
@@ -119,29 +178,72 @@ export default {
     selectTasks(){
       this.$router.push("/actividadesEstudiante");
     },
-    speak(texttospeak) {
-      if (texttospeak !== "") {
-        var utterThis = new SpeechSynthesisUtterance(texttospeak);
-        console.log(this.valueSelVoices);
-        var selectedOption = this.valueSelVoices;
-        utterThis.voice = selectedOption;
-        utterThis.rate = Math.pow(
-          Math.abs(this.valueRate) + 1,
-          this.valueRate < 0 ? -1 : 1
-        );
-        utterThis.pitch = this.valuePitch;
-        this.synth.speak(utterThis);
-        console.log(selectedOption);
-      }
+    
+    ///methods teclado y voz
+    logwrong(response){
+      console.log(response.event)
     },
-    handleKeydownAlt(e){
-      console.log(e.key);
-      //this.speak(e.key);
-      if(e.key=="w")
-      {
-        this.$router.push("/areatrabajo");
-      }
+    emitTexto(valor, valor2) {
+      console.log("Procesar Texto")
+      this.texto=valor
+      console.log(valor)
+      
     },
+    emitReproducir(valor, valor2) {
+      this.reproducir=valor
+      console.log("Procesar CT")
+      console.log(valor)
+      
+    },
+   
+    //Methods captura y voz
+
+    procesarTecladoAlt(response) {      
+      if (response.event.keyCode == "B".charCodeAt(0)) {
+        this.selectLessons()
+      }
+
+      if (response.event.keyCode == "A".charCodeAt(0)) {
+        this.selectTasks()
+      }
+
+      if (response.event.keyCode == "H".charCodeAt(0)) {
+        this.$t("homeHelp").forEach(element => {
+          this.$refs.componenteSpeak.quickSpeak(element)
+        }); 
+      }      
+
+      if (response.event.keyCode == "X".charCodeAt(0)) {
+          this.$refs.componenteSpeak.pauseSpeak()
+      }      
+
+      if (response.event.keyCode == "Y".charCodeAt(0)) {
+        
+          this.$refs.componenteSpeak.resumeSpeak()        
+      }      
+
+      if (response.event.keyCode == "Z".charCodeAt(0)) {
+        this.$refs.componenteSpeak.restartSpeak()
+      } 
+      
+      
+    },
+
+    activateVoiceComponent() {
+      setTimeout(() => {
+          this.playMenu()
+
+        //this.reproducir=true
+        }, 2000);
+    },
+    playMenu()
+    {
+      this.$t("CourseMenu").forEach(element => {
+            this.$refs.componenteSpeak.quickSpeak(element)
+            console.log(element)
+          });
+    }
+
 
   },
 };

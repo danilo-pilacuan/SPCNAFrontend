@@ -104,8 +104,6 @@ export default {
 
         synth.cancel()
 
-        
-        
       },
       pauseSpeak()
       {

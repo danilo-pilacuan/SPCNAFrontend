@@ -14,7 +14,7 @@
         "Presione alt más eme para escuchar el menú correspondiente a la ventana actual",
         "Presione alt más equis para pausar los comandos de voz",
         "Presione alt más ye para reanudar el último comando de voz",
-        "Presione alt más z para reiniciar el último comando de voz",
+        "Presione alt más z para omitir reproducción de los siguientes comandos de voz",
         "Presione alt más L para cerrar su sesión"
     ],
     "workingAreaMenu": [
@@ -32,7 +32,7 @@
     ],
     "workingAreaMenu2": [
         "Presiona alt más i continuar celda..... ",
-        "Presione alt más u para volver a escuchar celca actual..... "
+        "Presione alt más u para volver a escuchar celda actual..... "
     ],
     "workingAreaMenu3": [
         "Presiona alt más t para escuchar siguiente salida..... ",
@@ -51,13 +51,44 @@
     ],
     "CoursesStudent":
     [
-        "Presione alt mas eme para escuchar la lista de cursos",
+        "Menú Selección cursos",
+        "Presione alt mas beh para escuchar la lista de cursos",
+        "Presione alt mas c para seleccionar el curso",
         "Presione alt mas flecha arriba para rotar curso seleccionado hacia arriba",
         "Presione alt mas flecha abajo para rotar curso seleccionado hacia abajo",
         "Presione alt mas A para escuchar curso seleccionado actualmente",
         "Presione alt mas flecha atras para regresar a la ventana anterior",
         "Presione alt mas H para ayuda..... "
-
+    ],
+    "CourseMenu":
+    [
+        "Menú curso",
+        "Presione alt mas beh para acceder a las lecciones",
+        "Presione alt mas A para acceder a las actividades",
+        "Presione alt mas flecha atras para regresar a la ventana anterior",
+        "Presione alt mas H para ayuda..... "
+    ],
+    "LessonsStudent":
+    [
+        "Menú lecciones",
+        "Presione alt mas beh para escuchar la lista de lecciones",
+        "Presione alt mas c para seleccionar lección",
+        "Presione alt mas flecha arriba para rotar lección seleccionada hacia arriba",
+        "Presione alt mas flecha abajo para rotar lección seleccionada hacia abajo",
+        "Presione alt mas A para escuchar lección seleccionada actualmente",
+        "Presione alt mas flecha atras para regresar a la ventana anterior",
+        "Presione alt mas H para ayuda..... "
+    ],
+    "ActivitiesStudent":
+    [
+        "Menú actividades",
+        "Presione alt mas beh para escuchar la lista de actividades",
+        "Presione alt mas c para seleccionar la actividad",
+        "Presione alt mas flecha arriba para rotar actividad seleccionada hacia arriba",
+        "Presione alt mas flecha abajo para rotar actividad seleccionada hacia abajo",
+        "Presione alt mas A para escuchar actividad seleccionada actualmente",
+        "Presione alt mas flecha atras para regresar a la ventana anterior",
+        "Presione alt mas H para ayuda..... "
     ]
     
 }

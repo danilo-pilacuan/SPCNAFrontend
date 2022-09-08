@@ -1,6 +1,7 @@
 <template>
   
   <div class="home">
+    <UserHandle/>
     <Keypress key-event="keyup" :multiple-keys="multiple" @success="procesarTecladoAlt" />
 
     <VoiceComponent ref="componenteSpeak" :texto="texto" :reproducir="reproducir"
@@ -105,11 +106,12 @@
 
 <script>
 import VoiceComponent from '/src/components/VoiceComponent'
-
+import UserHandle from '../components/UserHandle.vue'
 
 export default {
   components: {
     VoiceComponent: VoiceComponent,
+    "UserHandle": UserHandle,
     Keypress: () => import('vue-keypress')
   },
   data() {

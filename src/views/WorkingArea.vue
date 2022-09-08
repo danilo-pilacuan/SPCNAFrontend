@@ -1,5 +1,5 @@
 <template>
-  <div class="home" tabindex="0" @keydown.alt="procesarTecladoAlt" @keydown.exact="capturarTeclado" v-if="fileInput">
+  <div class="home" tabindex="0" @keydown.alt="procesarTecladoAlt" @keydown.exact="capturarTeclado" v-if="fileInputData">
 <!--
   TODO: hacer menu mas interactivo con flechas y out por out
      -->
@@ -23,7 +23,7 @@
               <p class="title is-4">Área de Trabajo</p>
             </div>
             <div class="column">
-              <p class="title is-6">({{fileInput.name}}.json)</p>
+              <p class="title is-6">({{fileInputData.name}}.json)</p>
             </div>
           </div>
 
@@ -277,12 +277,12 @@ export default {
     VoiceComponent: VoiceComponent,
   },
   watch: {
-    fileInput (newValue) {
-      if(this.fileInput)
+    fileInputData (newValue) {
+      if(this.fileInputData)
       {
-        if(this.fileInput.content)
+        if(this.fileInputData.content)
         {
-          this.arrayNoteBookCell=this.fileInput.content;
+          this.arrayNoteBookCell=this.fileInputData.content;
         }
       }
 
@@ -301,6 +301,7 @@ export default {
       // vars for voiceComponent
       texto: this.$t('workingAreaMenu'), 
       reproducir:false,
+      fileInputData:null
     };
   },
   methods: {
@@ -409,9 +410,9 @@ export default {
     },
     saveFile()
     {
-      if(this.fileInput)
+      if(this.fileInputData)
       {
-        fetch("http://localhost:5000/api/scripts/"+this.fileInput._id, {
+        fetch("http://localhost:5000/api/scripts/"+this.fileInputData._id, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -710,6 +711,9 @@ export default {
     enableAudio(){
         return this.$store.state.enableAudio;
     },
+    selectedLesson(){
+        return this.$store.state.selectedLesson;
+    },
     synthVoice() {
       return this.$store.state.synthVoice;
     },
@@ -721,21 +725,32 @@ export default {
     
   },
   beforeMount(){
-        
         console.log(this.$route.params)
         if(this.fileInput)
         {
           if(this.fileInput.content)
           {
+            this.fileInputData=this.fileInput
             this.arrayNoteBookCell=this.fileInput.content;
           }
         }
+        // else
+        // {
+        //   console.log("No file input")
+        //   if(this.selectedLesson)
+        //   {
+        //     this.fileInputData=this.selectedLesson.associatedFile
+        //     this.arrayNoteBookCell=this.selectedLesson.associatedFile.content;
+        //   }
+        // }
+        
   },
   
   mounted() {
     console.log("MenuWorkingArea------------------------")
     console.log(this.$t('workingAreaMenu'))
 
+        
     if(this.enableAudio==true)
     {
       //this.texto=this.texto.join()

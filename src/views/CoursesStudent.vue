@@ -1,5 +1,6 @@
 <template>
-  <div id="home" v-if="currentUser">   
+  <div id="home" v-if="currentUser">  
+    <UserHandle/> 
     <Keypress key-event="keyup" :multiple-keys="multiple" @success="procesarTecladoAlt" @wrong="logwrong"/>
 
     <VoiceComponent ref="componenteSpeak" :texto="texto" :reproducir="reproducir"
@@ -27,10 +28,12 @@
 
 <script>
 import VoiceComponent from '/src/components/VoiceComponent'
+import UserHandle from '../components/UserHandle.vue'
 
 export default {
   components: {
     VoiceComponent: VoiceComponent,
+    "UserHandle": UserHandle,
     Keypress: () => import('vue-keypress')
   },
   data() {
@@ -42,6 +45,11 @@ export default {
       //Necesarios para keypress
       pressedKeyCode: null,
       multiple: [
+        {
+          keyCode: "B".charCodeAt(0), // 
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
         {
           keyCode: "M".charCodeAt(0), // 
           modifiers: ['altKey'],
@@ -123,8 +131,9 @@ export default {
   mounted() {
     console.log("Current user11")
     console.log(this.currentUser)
-    this.activateVoiceComponent()
     this.fillCursos()
+    this.activateVoiceComponent()
+    
   },
   methods: {
     selectCourse(curso)
@@ -193,17 +202,21 @@ export default {
       
     },
    
-    ////////// Methods captura y voz
+    //Methods captura y voz
 
     procesarTecladoAlt(response) {      
-      if (response.event.keyCode == "M".charCodeAt(0)) {
-        
+      if (response.event.keyCode == "B".charCodeAt(0)) {
         this.listarCursos()
       }
 
       if (response.event.keyCode == "C".charCodeAt(0)) {
-        this.$router.push('/cursosEstudiante')
+        this.selectCourse(this.currentSelectedCourse)
       }
+
+      if (response.event.keyCode == "M".charCodeAt(0)) {
+        this.playMenu()
+      }
+
 
       if (response.event.keyCode == "H".charCodeAt(0)) {
         this.$t("homeHelp").forEach(element => {
@@ -234,7 +247,6 @@ export default {
         if(this.posCurrentCourse<0)
         {
           this.posCurrentCourse=lenCursos-1;
-          
         }
         this.currentSelectedCourse=this.availableCourses[this.posCurrentCourse]
           this.$refs.componenteSpeak.quickSpeak("Curso seleccionado actualmente: "+this.currentSelectedCourse.name)
@@ -252,22 +264,24 @@ export default {
         }
         this.currentSelectedCourse=this.availableCourses[this.posCurrentCourse]
           this.$refs.componenteSpeak.quickSpeak("Curso seleccionado actualmente: "+this.currentSelectedCourse.name)
-        
-
       } 
       
     },
 
     activateVoiceComponent() {
       setTimeout(() => {
-          this.$t("CoursesStudent").forEach(element => {
-            this.$refs.componenteSpeak.quickSpeak(element)
-            console.log(element)
-          });
+          this.playMenu()
 
         //this.reproducir=true
         }, 2000);
     },
+    playMenu()
+    {
+      this.$t("CoursesStudent").forEach(element => {
+            this.$refs.componenteSpeak.quickSpeak(element)
+            console.log(element)
+          });
+    }
 
   },
   
