@@ -7,6 +7,7 @@
     <VoiceComponent ref="componenteSpeak" :texto="texto" :reproducir="reproducir"
     @onTexto="emitTexto"
     @onReproducir="emitReproducir"
+    v-if="userType==3"
     ></VoiceComponent>
 
 
@@ -16,7 +17,7 @@
       <div class="block">
         <div class="columns">
           <div class="column">
-            <section class="hero is-primary">
+            <section class="hero is-primary" @click="$router.push('/usuarios')">
               <div class="hero-body">
                 <p class="title">Usuarios</p>
                 <p class="subtitle">Administración de Usuarios</p>
@@ -27,14 +28,15 @@
       </div>
     </div>
 
+    
     <div class="container"  v-show="userType == 2"> <!--v-show="userType == 2">-->
       <div class="block">
         <div class="columns">
           <div class="column">
-            <section class="hero is-primary">
+            <section class="hero is-primary" @click="$router.push('/administracionCursos')">
               <div class="hero-body">
                 <p class="title">Administración de Cursos</p>
-                <p class="subtitle">Administración de Cursos</p>
+                <p class="subtitle"></p>
               </div>
             </section>
           </div>
@@ -57,17 +59,14 @@
       </div>
     </div>
 
+
     <div class="container" v-show="userType == 2">
       <div class="block">
         <div class="columns">
           <div class="column">
-            <section class="hero is-primary">
+            <section class="hero is-primary" @click="$router.push('/cursos')">
               <div class="hero-body">
-                <p class="title">Lecciones</p>
-                <p class="subtitle" v-show="userType == 2">
-                  Administración lecciones
-                </p>
-                <p class="subtitle" v-show="userType == 3">Tomar lecciones</p>
+                <p class="title">Mis Cursos</p>                
               </div>
             </section>
           </div>
@@ -85,22 +84,7 @@
         > -->
   
 
-    <div class="container" v-show="userType == 2">
-      <div class="block">
-        <div class="columns">
-          <div class="column">
-            <section class="hero is-primary">
-              <div class="hero-body">
-                <p class="title">Actividades</p>
-                <p class="subtitle">
-                  Administración actividades
-                </p>
-              </div>
-            </section>
-          </div>
-        </div>
-      </div>
-    </div>
+
   </div>
 </template>
 

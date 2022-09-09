@@ -155,9 +155,18 @@ export default {
 
                 if (data) {
                 this.tableData = data;
-                this.currentSelectedTask
-                console.log("Cursos user")
-                console.log(resp);
+                console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+                console.log(this.tableData)
+
+                this.tableData=this.tableData.filter(
+                  (e)=>e.task && e.task.isActive
+                  )
+
+                console.log("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV")
+                console.log(this.tableData)
+
+
+                this.currentSelectedTask=this.tableData[0]
                 } else {
                 //this.$router.push("/login")
                 this.tableData = [];
@@ -183,7 +192,7 @@ export default {
       for(let i=0;i<this.tableData.length;i++)
       {
         let actividad=this.tableData[i]
-        this.$refs.componenteSpeak.quickSpeak("Actividad "+contActividades.toString()+" "+actividad.name)
+        this.$refs.componenteSpeak.quickSpeak("Actividad "+contActividades.toString()+" "+actividad.task.name)
         contActividades=contActividades+1
       }
       
@@ -210,11 +219,11 @@ export default {
 
     procesarTecladoAlt(response) {      
       if (response.event.keyCode == "B".charCodeAt(0)) {
-        this.listarLecciones()
+        this.listarActividades()
       }
 
       if (response.event.keyCode == "C".charCodeAt(0)) {
-        this.selectLesson(this.currentSelectedLesson)
+        this.selectTask(this.currentSelectedTask)
       }
 
       if (response.event.keyCode == "M".charCodeAt(0)) {
@@ -242,32 +251,32 @@ export default {
       } 
 
       if (response.event.keyCode == "A".charCodeAt(0)) {
-        this.$refs.componenteSpeak.quickSpeak("Actividad seleccionada actualmente: "+this.currentSelectedLesson.name)
+        this.$refs.componenteSpeak.quickSpeak("Actividad seleccionada actualmente: "+this.currentSelectedTask.task.name)
       } 
       
       if (response.event.keyCode == 38) { //arrowup
-        let lenLessons=this.tableData.length
+        let lenTasks=this.tableData.length
         this.posCurrentTask=this.posCurrentTask-1
         if(this.posCurrentTask<0)
         {
-          this.posCurrentTask=lenLessons-1;
+          this.posCurrentTask=lenTasks-1;
         }
-        this.currentSelectedLesson=this.tableData[this.posCurrentTask]
-          this.$refs.componenteSpeak.quickSpeak("Actividad seleccionada actualmente: "+this.currentSelectedLesson.name)
+        this.currentSelectedTask=this.tableData[this.posCurrentTask]
+          this.$refs.componenteSpeak.quickSpeak("Actividad seleccionada actualmente: "+this.currentSelectedTask.task.name)
         
       } 
 
       if (response.event.keyCode == 40) { //arrowdown
-        let lenLessons=this.tableData.length
+        let lenTasks=this.tableData.length
         this.posCurrentTask=this.posCurrentTask+1
         console.log("pos")
         console.log(this.posCurrentTask)
-        if(this.posCurrentTask==lenLessons)
+        if(this.posCurrentTask==lenTasks)
         {
           this.posCurrentTask=0;
         }
-        this.currentSelectedLesson=this.tableData[this.posCurrentTask]
-          this.$refs.componenteSpeak.quickSpeak("Actividad seleccionada actualmente: "+this.currentSelectedLesson.name)
+        this.currentSelectedTask=this.tableData[this.posCurrentTask]
+          this.$refs.componenteSpeak.quickSpeak("Actividad seleccionada actualmente: "+this.currentSelectedTask.task.name)
       } 
       
     },

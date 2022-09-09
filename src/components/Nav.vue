@@ -28,15 +28,15 @@
             <b-navbar-item tag="router-link" :to="{ path: '/' }">
                 Inicio
             </b-navbar-item>
-            <b-navbar-item v-show="userType==1" tag="router-link" :to="{ path: '/usuarios' }">
+            <!-- <b-navbar-item v-show="userType==1" tag="router-link" :to="{ path: '/usuarios' }">
                 Usuarios
-            </b-navbar-item>
-            <b-navbar-item v-show="userType==2" tag="router-link" :to="{ path: '/administracionCursos' }">
+            </b-navbar-item> -->
+            <!-- <b-navbar-item v-show="userType==2" tag="router-link" :to="{ path: '/administracionCursos' }">
                 Administración Cursos
             </b-navbar-item>
             <b-navbar-item v-show="userType==2" tag="router-link" :to="{ path: '/cursos' }">
                 Cursos
-            </b-navbar-item>
+            </b-navbar-item> -->
             <!-- <b-navbar-item v-show="userType==3" tag="router-link" :to="{ path: '/cursosEstudiante' }">
                 Cursos
             </b-navbar-item> -->
