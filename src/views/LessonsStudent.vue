@@ -160,7 +160,6 @@ export default {
                 }
             });
         } catch (e) {
-            this.$store.dispatch("setAuth", false);
         }
     },
     selectLesson(lesson)

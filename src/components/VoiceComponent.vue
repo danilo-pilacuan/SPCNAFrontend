@@ -5,7 +5,7 @@
       v-model="dataReproducir"
       :voice="synthVoice"
       :text="dataTexto"
-      :rate="0.7"
+      :rate="0.85"
       @list-voices="listVoices"
     /> 
     </div>
@@ -79,7 +79,7 @@ export default {
           
           
           utterThis.voice = this.synthVoice;
-          utterThis.rate = 0.75;
+          utterThis.rate = 0.85;
           utterThis.pitch = 1;
           var synth = window.speechSynthesis
           synth.speak(utterThis);

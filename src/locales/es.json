@@ -4,91 +4,102 @@
     "yes-button": "Si",
     "no-button": "No",
 
-    "ayudaHome": "Bienvenido, presione shift mas alt mas C para acceder a sus cursos o alt mas ye para recibir ayuda",
+    "ayudaHome": "Bienvenido, presione shift más, alt más, C para acceder a sus cursos o alt más, ye para recibir ayuda",
     "homeMenu":[
-        "Menú Inicio, presione alt mas se para acceder a sus cursos o alt mas h para recibir ayuda"
+        "Menú Inicio, presione alt más, se para acceder a sus cursos o alt más, h para recibir ayuda"
     ],
     "homeHelp":[
         "Ayuda:",
         "El sistema proporciona ayudas auditivas para su correcta utilización",
-        "Presione alt más eme para escuchar el menú correspondiente a la ventana actual",
-        "Presione alt más equis para pausar los comandos de voz",
-        "Presione alt más ye para reanudar el último comando de voz",
-        "Presione alt más z para omitir reproducción de los siguientes comandos de voz",
-        "Presione alt más L para cerrar su sesión"
+        "Presione alt más, eme, para escuchar el menú correspondiente a la ventana actual",
+        "Presione alt más, equis, para pausar los comandos de voz",
+        "Presione alt más, ye, para reanudar el último comando de voz",
+        "Presione alt más, z, para omitir reproducción de los siguientes comandos de voz",
+        "Presione alt más, L, para cerrar su sesión"
     ],
     "workingAreaMenu": [
-        "Presiona alt más w para escribir en celda actual..... ",
-        "Presione alt más R para ejecutar celda actual..... ",
-        "Presione alt más ele para escuchar celda actual..... ",
-        "Presione alt más P para leer la pantalla actual",
-        "Presione alt más C para crear nueva celda..... ",
-        "Presione alt más Q para subir celda..... ",
-        "Presione alt más Ye para bajar celda..... ",
-        "Presione alt más flecha arriba para seleccionar opcion siguiente..... ",
-        "Presione alt más flecha abajo para seleccionar opcion anterior..... ",
-        "Presione alt más M para escuchar menú nuevamente..... ",
-        "Presione alt mas H para ayuda..... "
+        "Presiona alt más, w, para escribir en celda actual..... ",
+        "Presiona alt más, Ah, para limpiar celda actual..... ",
+        "Presione alt más, R, para ejecutar celda actual..... ",
+        "Presione alt más, ele, para escuchar celda actual..... ",
+        "Presione alt más, P, para leer la pantalla actual",
+        "Presione alt más, C, para crear nueva celda..... ",
+        "Presione alt más, Q, para subir celda..... ",
+        "Presione alt más, Ye, para bajar celda..... ",
+        "Presione alt más, flecha arriba para seleccionar opcion siguiente..... ",
+        "Presione alt más, flecha abajo para seleccionar opcion anterior..... ",
+        "Presione alt más, M, para escuchar menú nuevamente..... ",
+        "Presione alt más, H, para ayuda..... "
     ],
     "workingAreaMenu2": [
-        "Presiona alt más i continuar celda..... ",
-        "Presione alt más u para volver a escuchar celda actual..... "
+        "Presiona alt más, i continuar celda..... ",
+        "Presione alt más, u para volver a escuchar celda actual..... "
     ],
     "workingAreaMenu3": [
-        "Presiona alt más t para escuchar siguiente salida..... ",
-        "Presione alt más A para repetir salida actual..... "
+        "Presiona alt más, t para escuchar siguiente salida..... ",
+        "Presione alt más, A para repetir salida actual..... "
     ],
     "workingAreaMenu4": [
-        "No hay más salidas en la celda actual..... ",
-        "Presione alt más equis para avanzar a la siguiente celda"
+        "No hay más, salidas en la celda actual..... ",
+        "Presione alt más, equis para avanzar a la siguiente celda"
     ],
     "workingAreaMenu5": [
-        "No hay más celdas a continuación..... ",
-        "Presione alt más be para escuchar desde el principio"
+        "No hay más, celdas a continuación..... ",
+        "Presione alt más, be, para escuchar desde el principio"
     ],
     "StudentCourseViewMenu": [
-        "Bienvenido, presione alt mas w para ir al area de trabajo o alt mas ye para recibir ayuda"
+        "Bienvenido, presione alt más, w para ir al area de trabajo o alt más, ye para recibir ayuda"
     ],
     "CoursesStudent":
     [
         "Menú Selección cursos",
-        "Presione alt mas beh para escuchar la lista de cursos",
-        "Presione alt mas c para seleccionar el curso",
-        "Presione alt mas flecha arriba para cambiar curso seleccionado hacia arriba",
-        "Presione alt mas flecha abajo para cambiar curso seleccionado hacia abajo",
-        "Presione alt mas A para escuchar curso seleccionado actualmente",
-        "Presione alt mas flecha atras para regresar a la ventana anterior",
-        "Presione alt mas H para ayuda..... "
+        "Presione alt más, beh, para escuchar la lista de cursos",
+        "Presione alt más, c, para seleccionar el curso",
+        "Presione alt más, flecha arriba para cambiar curso seleccionado hacia arriba",
+        "Presione alt más, flecha abajo para cambiar curso seleccionado hacia abajo",
+        "Presione alt más, A, para escuchar curso seleccionado actualmente",
+        "Presione alt más, flecha atras para regresar a la ventana anterior",
+        "Presione alt más, H, para ayuda..... "
     ],
     "CourseMenu":
     [
         "Menú curso",
-        "Presione alt mas beh para acceder a las lecciones",
-        "Presione alt mas A para acceder a las actividades",
-        "Presione alt mas flecha atras para regresar a la ventana anterior",
-        "Presione alt mas H para ayuda..... "
+        "Presione alt más, beh, para acceder a las lecciones",
+        "Presione alt más, A, para acceder a las actividades",
+        "Presione alt más, flecha atras para regresar a la ventana anterior",
+        "Presione alt más, H, para ayuda..... "
     ],
     "LessonsStudent":
     [
         "Menú lecciones",
-        "Presione alt mas beh para escuchar la lista de lecciones",
-        "Presione alt mas c para seleccionar lección",
-        "Presione alt mas flecha arriba para cambiar lección seleccionada hacia arriba",
-        "Presione alt mas flecha abajo para cambiar lección seleccionada hacia abajo",
-        "Presione alt mas A para escuchar lección seleccionada actualmente",
-        "Presione alt mas flecha atras para regresar a la ventana anterior",
-        "Presione alt mas H para ayuda..... "
+        "Presione alt más, beh para escuchar la lista de lecciones",
+        "Presione alt más, c, para seleccionar lección",
+        "Presione alt más, flecha arriba para cambiar lección seleccionada hacia arriba",
+        "Presione alt más, flecha abajo para cambiar lección seleccionada hacia abajo",
+        "Presione alt más, A, para escuchar lección seleccionada actualmente",
+        "Presione alt más, flecha atras para regresar a la ventana anterior",
+        "Presione alt más, H, para ayuda..... "
     ],
     "ActivitiesStudent":
     [
         "Menú actividades",
-        "Presione alt mas beh para escuchar la lista de actividades",
-        "Presione alt mas c para seleccionar la actividad",
-        "Presione alt mas flecha arriba para cambiar actividad seleccionada hacia arriba",
-        "Presione alt mas flecha abajo para cambiar actividad seleccionada hacia abajo",
-        "Presione alt mas A para escuchar actividad seleccionada actualmente",
-        "Presione alt mas flecha atras para regresar a la ventana anterior",
-        "Presione alt mas H para ayuda..... "
+        "Presione alt más, beh, para escuchar la lista de actividades",
+        "Presione alt más, c, para seleccionar la actividad",
+        "Presione alt más, flecha arriba para cambiar actividad seleccionada hacia arriba",
+        "Presione alt más, flecha abajo para cambiar actividad seleccionada hacia abajo",
+        "Presione alt más, A, para escuchar actividad seleccionada actualmente",
+        "Presione alt más, flecha atras para regresar a la ventana anterior",
+        "Presione alt más, H, para ayuda..... "
+    ],
+    "MenuLogin":
+    [
+        "Antes de comenzar presione una vez F11",
+        "Menú Inicio de Sesión",
+        "Presione alt más, A, para ingresar su nombre de usuario",
+        "Presione alt más, b, para ingresar su contraseña",
+        "Presione alt más, c, para ingresar al sistema",
+        "Presione alt más, H, para ayuda..... "
     ]
+
     
 }

@@ -64,6 +64,10 @@ const routes = [
     component: () => import('@/views/TaskView.vue'),
   },
   {
+    path :'/calificaractividad',
+    component: () => import('@/views/TaskScores.vue'),
+  },
+  {
     path :'/verleccion',
     name: 'verleccion',
     props: true,
@@ -78,6 +82,12 @@ const routes = [
   {
     path :'/resolveractividad',
     name: 'resolveractividad',
+    props: true,
+    component: () => import('@/views/WorkingArea.vue'),
+  },
+  {
+    path :'/revisaractividad',
+    name: 'revisaractividad',
     props: true,
     component: () => import('@/views/WorkingArea.vue'),
   },
@@ -126,6 +136,10 @@ const routes = [
       {
         path :'createtask',
         component: () => import('@/components/CreateTask'),
+      },
+      {
+        path :'scoretask',
+        component: () => import('@/components/ScoreTask'),
       },
       {
         path :'fileexplorer',

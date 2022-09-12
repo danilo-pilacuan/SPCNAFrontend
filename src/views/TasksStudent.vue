@@ -152,9 +152,10 @@ export default {
             .then((response) => response.json())
             .then((data) => {
                 var resp = data;
-
+                console.log("tablaActividades")
+                console.log(data)
                 if (data) {
-                this.tableData = data;
+                this.tableData = data.data;
                 console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
                 console.log(this.tableData)
 

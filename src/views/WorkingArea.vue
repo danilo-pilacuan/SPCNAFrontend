@@ -287,6 +287,10 @@ export default {
       }
 
     },
+    fileInput (newValue) {
+      this.fileInputData=this.fileInput
+
+    },
   },
 
   data() {
@@ -318,7 +322,7 @@ export default {
       else if(e.key == "w")
       {
         document.getElementsByClassName("prism-editor__textarea")[this.currentCell].focus();
-        this.speak("escribir")
+        this.$refs.componenteSpeak.quickSpeak("escribir")
       }
       else if(e.key == "r")
       {
@@ -726,14 +730,7 @@ export default {
   },
   beforeMount(){
         console.log(this.$route.params)
-        if(this.fileInput)
-        {
-          if(this.fileInput.content)
-          {
-            this.fileInputData=this.fileInput
-            this.arrayNoteBookCell=this.fileInput.content;
-          }
-        }
+        
         // else
         // {
         //   console.log("No file input")
@@ -749,8 +746,22 @@ export default {
   mounted() {
     console.log("MenuWorkingArea------------------------")
     console.log(this.$t('workingAreaMenu'))
+    
+    if(this.fileInput)
+    {
+      this.fileInputData=this.fileInput
 
-        
+      if(this.fileInput.content)
+      {
+        //this.fileInputData=this.fileInput
+        this.arrayNoteBookCell=this.fileInputData
+      }
+    }
+    else
+    {
+      this.fileInputData=this.selectedLesson.associatedFile
+    }
+    
     if(this.enableAudio==true)
     {
       //this.texto=this.texto.join()

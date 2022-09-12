@@ -39,6 +39,15 @@
               </b-table-column>
 
               <b-table-column
+                field="completename"
+                label="Nombre Completo"
+                v-slot="props"
+                searchable
+              >
+                {{ props.row.completename }}
+              </b-table-column>
+
+              <b-table-column
                 field="email"
                 label="Correo"
                 v-slot="props"
@@ -101,6 +110,16 @@
                   :message="{ 'Username is not available': validateUsername }"
                 >
                   <b-input v-model="username" maxlength="30"></b-input>
+                </b-field>
+              </div>
+            </div>
+
+            <div class="columns">
+              <div class="column">
+                <b-field
+                  label="Nombre completo"
+                >
+                  <b-input v-model="completename" maxlength="100"></b-input>
                 </b-field>
               </div>
             </div>
@@ -204,6 +223,7 @@ export default {
   data() {
     return {
       username: "",
+      completename:"",
       email: "",
       password: "",
       password2: "",
@@ -298,6 +318,7 @@ export default {
       this.isAddUser = false;
       this.isEditUser = true;
       this.username = row.name;
+      this.completename=row.completename;
       this.email = row.email;
       // this.password = row.name;
       // this.password2 = row.name;
@@ -316,6 +337,7 @@ export default {
           credentials: "include",
           body: JSON.stringify({
             name: this.username,
+            completename:this.completename,
             email: this.email,
             password: this.password,
             userType: this.typeSelected,
@@ -329,6 +351,7 @@ export default {
             this.isAddUser = false;
             this.isEditUser = false;
             this.username = "";
+            this.completename="";
             this.email = "";
             this.password = "";
             this.password2 = "";
@@ -349,6 +372,7 @@ export default {
       this.isAddUser = false;
       this.isEditUser = false;
       this.username = "";
+      this.completename="";
       this.email = "";
       this.password = "";
       this.password2 = "";
