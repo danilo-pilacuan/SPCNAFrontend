@@ -12,13 +12,13 @@
                 :type="{ 'is-danger': validateCourseName }"
                 :message="{ 'Username is not available': validateCourseName }"
             >
-                <b-input v-model="inputTaskName" maxlength="50"></b-input>
+                <b-input v-model="inputTaskName" maxlength="50" disabled="true"></b-input>
             </b-field>
             <b-field
                 class="has-text-left"
                 label="Descripción"
             >
-                <b-input v-model="inputTaskDescription" maxlength="150"></b-input>
+                <b-input v-model="inputTaskDescription" maxlength="150" disabled="true"></b-input>
             </b-field>
 
             
@@ -59,6 +59,13 @@
                 rounded
                 type="is-success"
                 icon-left="pencil"
+                @click="editScore(props.row)"
+                >
+                </b-button>
+                <b-button
+                rounded
+                type="is-link"
+                icon-left="eye"
                 @click="viewandscoreTask(props.row)"
                 >
                 </b-button>
@@ -71,13 +78,47 @@
 
         </div>
       </div>
-      <footer class="card-footer">
-        <b-button class="m-3" type="is-primary" @click="submitTask"
-          >Guardar</b-button
-        >
-      </footer>
     </div>
+<b-modal v-model="showModalEdit">
+        
 
+        
+        <div class="modal-card" style="width: auto">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Editar</p>
+            <button type="button" class="delete" @click="showModalEdit=false" />
+          </header>
+          <section class="modal-card-body">
+            <div class="columns">
+              <div class="column">
+                <b-field
+                class="has-text-left mt-3"
+                label="Calificación"
+            >
+                <div class="card p-3 mb-1" style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+                    <div class="columns">
+                    <div class="column is-11">
+                        <b-input v-model="inputCalificacion" maxlength="250"></b-input>
+                    </div>
+                </div>
+                </div>
+            </b-field>
+              </div>
+            </div>
+
+          </section>
+          <footer class="modal-card-foot">
+            <div class="columns">
+              <div class="column">
+                <b-button type="is-success" @click="confirmEdit" label="Guardar" />
+              </div>
+              <div class="column">
+                <b-button type="is-primary" @click="showModalEdit=false" label="Cancelar" />
+              </div>
+            </div>
+          </footer>
+        </div>
+    </b-modal>
   </div>
 </template>
 
@@ -88,11 +129,13 @@ export default {
         inputTaskName:null,
         inputTaskDescription: null,
         inputTaskContent:null,
+        inputCalificacion:0,
         validateCourseName: false,
         inputAddInstruction:null,
         showModalEdit:false,
         inputEditInstruction: null,
         selectedInstruction:null,
+        selectedUserTask:null,
         numberOfInstructions: 0,
         isEditTask: false,
         contentData:[
@@ -135,16 +178,18 @@ export default {
       viewandscoreTask(row)
       {
         console.log("Will set selected Lesson")
-        this.$store.dispatch("setSelectedLesson", lesson);
+        //this.$store.dispatch("setSelectedLesson", row);
 
-        this.fileInput=lesson.associatedFile
+        this.fileInput=row.scriptFile
         console.log("fileInput")
         console.log(this.fileInput)
         this.$router.push({name: 'revisaractividad', params: { fileInput: this.fileInput}});
       },
-      cleanInstructionEdit()
+      editScore(row)
       {
-          this.inputEditInstruction=null
+        this.selectedUserTask=row
+        this.showModalEdit=true
+        this.inputCalificacion=row.score
       },
 
       fetchUsertaks() {
@@ -161,7 +206,7 @@ export default {
 
             if (data) {
 
-              this.userTasksTable = data.data;
+              this.userTasksTable= data.data;
               console.log("this.userTasksTable")
               console.log(this.userTasksTable);
             } else {
@@ -173,45 +218,15 @@ export default {
         this.$store.dispatch("setAuth", false);
       }
     },
-      submitTask()
-      {
-        if(!this.isEditTask)
-        {
-          fetch(process.env.VUE_APP_BACKEND+":5000/api/Tasks", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify({
-            name: this.inputTaskName,
-            description: this.inputTaskDescription,
-            course: this.selectedCourse._id,
-            isActive: this.estadoSeleccionado,
-            content: this.contentData
-          }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            var resp = data.message;
-            console.log("resp Task:")
-            console.log(resp)
-            this.$router.push("/curso/actividades");
-          })
-          .catch((error)=>{
-            this.$buefy.dialog.alert("Error al crear la Actividad");
-          });
-        }
-        else
-        {
-          fetch(process.env.VUE_APP_BACKEND+":5000/api/Tasks/"+this.selectedTask._id, {
+    confirmEdit()
+    {
+      fetch(process.env.VUE_APP_BACKEND+":5000/api/usertasks/"+this.selectedUserTask._id, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
             body: JSON.stringify({
-              name: this.inputTaskName,
-              description: this.inputTaskDescription,
-              course: this.selectedCourse._id,
-              isActive: this.estadoSeleccionado,
-              content: this.contentData
+              score: this.inputCalificacion,
+              hasScore:true
             }),
           })
           .then((response) => response.json())
@@ -219,13 +234,16 @@ export default {
             var resp = data.message;
             console.log("resp Task:")
             console.log(resp)
-            this.$router.push("/curso/actividades");
+            this.$buefy.dialog.alert("Calificación guardada con éxito");
+            this.showModalEdit=false
+            this.inputCalificacion=0
+            this.fetchUsertaks()
           })
           .catch((error)=>{
-            this.$buefy.dialog.alert("Error al crear la Actividad");
+            this.$buefy.dialog.alert("Error guardar calificación");
           });
-        }
-      }
+    },
+      
   },
   mounted() {
     if(this.selectedTask)

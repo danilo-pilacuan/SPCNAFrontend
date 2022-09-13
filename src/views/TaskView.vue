@@ -1,19 +1,12 @@
 <template>
   <div id="home" v-if="selectedUserTask">   
+    <UserHandle/> 
+    <Keypress key-event="keyup" :multiple-keys="multiple" @success="procesarTecladoAlt" @wrong="logwrong"/>
 
-    <!-- <div class="container" v-for="instruccion,index in selectedUserTask.task.content" :key="index">
-      <div class="block" @click="selectCourse()">
-        <div class="columns">
-          <div class="column">
-              <section class="hero is-primary" style="cursor: pointer;">
-              <div class="hero-body">
-                <p class="title">{{instruccion.data}}</p>
-              </div>
-            </section>
-          </div>
-        </div>
-      </div>
-    </div> -->
+    <VoiceComponent ref="componenteSpeak" :texto="texto" :reproducir="reproducir"
+    @onTexto="emitTexto"
+    @onReproducir="emitReproducir"
+    ></VoiceComponent>
 
     <div class="card" v-if="selectedUserTask">
       <header class="card-header">
@@ -57,6 +50,13 @@
 
 
         </b-table>
+        <b-field
+        v-if="selectedUserTask.hasScore"
+                class="has-text-left"
+                label="Calificación"
+            >
+                <b-input :value="selectedUserTask.score" disabled></b-input>
+            </b-field>
         </div>
       </div>
 
@@ -67,9 +67,78 @@
 </template>
 
 <script>
+import VoiceComponent from '/src/components/VoiceComponent'
+import UserHandle from '../components/UserHandle.vue'
+
 export default {
+  components: {
+    VoiceComponent: VoiceComponent,
+    "UserHandle": UserHandle,
+    Keypress: () => import('vue-keypress')
+  },
   data() {
     return {
+
+      //necesarios para voiceComponent
+      texto:"Prueba texto", //"Bienvenido, presione alt mas w para ir al area de trabajo o alt mas ye para recibir ayuda",
+      reproducir:false,
+
+      //Necesarios para keypress
+      pressedKeyCode: null,
+      multiple: [
+        {
+          keyCode: "B".charCodeAt(0), // 
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "M".charCodeAt(0), // 
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "C".charCodeAt(0), // 
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "A".charCodeAt(0), // 
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "H".charCodeAt(0), // H
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "X".charCodeAt(0), // H
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "Y".charCodeAt(0), // H
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "Z".charCodeAt(0), // H
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: 38,
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: 40,
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+      ],
+
+
       test: false,
       tableData: [],
       selected: null,
@@ -104,8 +173,7 @@ export default {
     },
   },
   mounted() {
-    console.log("Current user11")
-    console.log(this.currentUser)
+    this.activateVoiceComponent()
   },
   methods: {
     solveTask()
@@ -130,6 +198,96 @@ export default {
       this.tableUsersData = this.selectedCourse.users;
       this.isSelectCourse = false;
     },
+
+
+    ///methods teclado y voz
+    logwrong(response){
+      console.log(response.event)
+    },
+    emitTexto(valor, valor2) {
+      console.log("Procesar Texto")
+      this.texto=valor
+      console.log(valor)
+      
+    },
+    emitReproducir(valor, valor2) {
+      this.reproducir=valor
+      console.log("Procesar CT")
+      console.log(valor)
+      
+    },
+   
+    //Methods captura y voz
+
+    procesarTecladoAlt(response) {     
+      if (response.event.keyCode == "A".charCodeAt(0)) {
+        this.$refs.componenteSpeak.quickSpeak("Nombre de la actividad: "+this.selectedUserTask.task.name)
+        this.$refs.componenteSpeak.quickSpeak("Descripción: "+this.selectedUserTask.task.description)
+        if(this.selectedUserTask.hasScore)
+        {
+          this.$refs.componenteSpeak.quickSpeak("Su calificación: "+this.selectedUserTask.score)
+        }
+        else
+        {
+          this.$refs.componenteSpeak.quickSpeak("Aún no calificada.")
+        }
+
+
+      } 
+
+      if (response.event.keyCode == "B".charCodeAt(0)) {
+        let contInstr=1
+        this.selectedUserTask.task.content.forEach(element => {
+          this.$refs.componenteSpeak.quickSpeak("Instrucción: "+contInstr+". "+element.data)
+          contInstr=contInstr+1
+        });
+      }
+
+      if (response.event.keyCode == "C".charCodeAt(0)) {
+        this.solveTask()
+      }
+
+      if (response.event.keyCode == "M".charCodeAt(0)) {
+        this.playMenu()
+      }
+
+
+      if (response.event.keyCode == "H".charCodeAt(0)) {
+        this.$t("homeHelp").forEach(element => {
+          this.$refs.componenteSpeak.quickSpeak(element)
+        }); 
+      }      
+
+      if (response.event.keyCode == "X".charCodeAt(0)) {
+          this.$refs.componenteSpeak.pauseSpeak()
+      }      
+
+      if (response.event.keyCode == "Y".charCodeAt(0)) {
+        
+          this.$refs.componenteSpeak.resumeSpeak()        
+      }      
+
+      if (response.event.keyCode == "Z".charCodeAt(0)) {
+        this.$refs.componenteSpeak.restartSpeak()
+      } 
+      
+    },
+
+    activateVoiceComponent() {
+      setTimeout(() => {
+          this.playMenu()
+
+        //this.reproducir=true
+        }, 2000);
+    },
+    playMenu()
+    {
+      this.$t("SolveTaskMenu").forEach(element => {
+            this.$refs.componenteSpeak.quickSpeak(element)
+            console.log(element)
+          });
+    }
+
   },
   
 };

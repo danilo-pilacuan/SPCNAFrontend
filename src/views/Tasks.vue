@@ -155,7 +155,7 @@ export default {
     },
     editTask(row){
       this.$store.dispatch("setSelectedTask", row);
-      this.$router.push("/curso/createTask");
+      this.$router.push("/curso/editTask");
     },
     deleteTask(row){
       this.deleteSelectedTask=row

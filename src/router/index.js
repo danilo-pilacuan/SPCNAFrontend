@@ -138,6 +138,10 @@ const routes = [
         component: () => import('@/components/CreateTask'),
       },
       {
+        path :'editTask',
+        component: () => import('@/components/CreateTask'),
+      },
+      {
         path :'scoretask',
         component: () => import('@/components/ScoreTask'),
       },

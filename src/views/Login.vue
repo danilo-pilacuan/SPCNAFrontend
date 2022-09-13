@@ -1,6 +1,6 @@
 <template>
   <div id="login" class="home" >
-    <UserHandle />
+    
     <Keypress
       key-event="keyup"
       :multiple-keys="multiple"
@@ -90,7 +90,6 @@ import UserHandle from "../components/UserHandle.vue";
 export default {
   components: {
     VoiceComponent: VoiceComponent,
-    UserHandle: UserHandle,
     Keypress: () => import("vue-keypress"),
   },
   data() {
@@ -240,7 +239,7 @@ export default {
       }, 2000);
     },
     playMenu() {
-      this.$t("MenuLogin").forEach((element) => {
+      this.$t("LoginMenu").forEach((element) => {
         this.$refs.componenteSpeak.quickSpeak(element);
         console.log(element);
       });

@@ -91,13 +91,21 @@
         "Presione alt más, flecha atras para regresar a la ventana anterior",
         "Presione alt más, H, para ayuda..... "
     ],
-    "MenuLogin":
+    "LoginMenu":
     [
         "Antes de comenzar presione una vez F11",
         "Menú Inicio de Sesión",
         "Presione alt más, A, para ingresar su nombre de usuario",
         "Presione alt más, b, para ingresar su contraseña",
         "Presione alt más, c, para ingresar al sistema",
+        "Presione alt más, H, para ayuda..... "
+    ],
+    "SolveTaskMenu":
+    [
+        "Menú Actividad",
+        "Presione alt más, A, para escuchar la información de la actividad",
+        "Presione alt más, b, para escuchar las instrucciones para realizar la actividad",
+        "Presione alt más, C, para pasar al área de trabajo y resolver la actividad",
         "Presione alt más, H, para ayuda..... "
     ]
 
