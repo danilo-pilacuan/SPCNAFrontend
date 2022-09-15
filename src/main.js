@@ -10,6 +10,7 @@ import i18n from './i18n'
 
 import browserDetect from "vue-browser-detect-plugin";
 
+import VueClipboard from 'vue-clipboard2'
 
 
 import VueWebSpeech from 'vue-web-speech'
@@ -23,6 +24,7 @@ Vue.use(VueMathjax)
 Vue.use(VueCookies)
 Vue.use(VueWebSpeech)
 Vue.use(browserDetect);
+Vue.use(VueClipboard)
 
 
 new Vue({

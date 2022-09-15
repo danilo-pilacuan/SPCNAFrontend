@@ -18,7 +18,7 @@
                   ref="myTextArea"
                 >
                 </textarea> -->
-                <prism-editor class="my-editor p-1" v-model="valorTextArea" ref="myTextArea" :highlight="highlighter" line-numbers @blur="handleBlur" @focus="emitirKey"></prism-editor>
+                <prism-editor class="my-editor p-1" v-model="valorTextArea" ref="myTextArea" :highlight="highlighter" line-numbers @blur="handleBlur" @focus="emitirKey" :readonly="isTextEnabled"></prism-editor>
               </section>
             </div>
           </div>
@@ -93,6 +93,10 @@ export default {
     activeCell:
     {
       required: true
+    },
+    ownerid:
+    {
+      required: true
     }
   },
   data() {
@@ -103,6 +107,7 @@ export default {
       valorTextArea: this.value,
       salidaTextArea: "",
       resultadoMaxima: "",
+      isTextEnabled:true
     };
   },
   watch:
@@ -132,12 +137,56 @@ export default {
        {
          console.log("Cell: "+this.indice+" inactive")
        }
+     },
+     ownerid()
+     {
+      if(this.ownerid!=this.currentUser._id)
+    {
+      this.isTextEnabled=true
+      console.log("Ownerid diferente")
+    }
+    else{
+      this.isTextEnabled=false
+      console.log("Ownerid igual")
+    }
      }
   },
   mounted() {
     //console.log(this.arrayComponentes);
     //this.$refs.myTextArea.focus();
     document.getElementsByClassName("prism-editor__textarea")[this.indice].focus();
+    if(this.ownerid!=this.currentUser._id)
+    {
+      this.isTextEnabled=true
+      console.log("Ownerid diferente")
+    }
+    else{
+      this.isTextEnabled=false
+      console.log("Ownerid igual")
+    }
+  },
+  computed: {
+    authenticated() {
+      return this.$store.state.authenticated;
+    },
+    userType() {
+      return this.$store.state.userType;
+    },
+    selectedCourse() {
+      return this.$store.state.selectedCourse;
+    },
+    currentUser(){
+        return this.$store.state.currentUser;
+    },
+    enableAudio(){
+        return this.$store.state.enableAudio;
+    },
+    selectedLesson(){
+        return this.$store.state.selectedLesson;
+    },
+    synthVoice() {
+      return this.$store.state.synthVoice;
+    },
   },
   methods: {
     handleBlur(){

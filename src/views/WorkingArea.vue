@@ -6,6 +6,7 @@
     <VoiceComponent ref="componenteSpeak" :texto="texto" :reproducir="reproducir"
     @onTexto="emitTexto"
     @onReproducir="emitReproducir"
+    v-if="enableVoice"
     ></VoiceComponent>
 
     <section class="section p-0">
@@ -43,31 +44,31 @@
                   :icon-right="active ? 'menu-up' : 'menu-down'"
                 />
               </template>
-              <b-dropdown-item class="has-text-left">
+              <!-- <b-dropdown-item class="has-text-left">
                 Nuevo script
-              </b-dropdown-item>
+              </b-dropdown-item> -->
               <b-dropdown-item class="has-text-left" @click="abrirScript">
                 Abrir
               </b-dropdown-item>
               <hr class="mt-1 mb-1" />
-              <b-dropdown-item class="has-text-left">
+              <!-- <b-dropdown-item class="has-text-left">
                 Realizar una copia
-              </b-dropdown-item>
-              <b-dropdown-item class="has-text-left">
+              </b-dropdown-item> -->
+              <!-- <b-dropdown-item class="has-text-left">
                 Guardar como...
-              </b-dropdown-item>
-              <b-dropdown-item class="has-text-left">
+              </b-dropdown-item> -->
+              <!-- <b-dropdown-item class="has-text-left">
                 Renombrar
-              </b-dropdown-item>
-              <hr class="mt-1 mb-1" />
-              <b-dropdown-item class="has-text-left">
+              </b-dropdown-item> -->
+              <!-- <hr class="mt-1 mb-1" /> -->
+              <!-- <b-dropdown-item class="has-text-left">
                 Imprimir
-              </b-dropdown-item>
+              </b-dropdown-item> -->
               <b-dropdown-item class="has-text-left" @click="descargarScript">
                 Descargar
               </b-dropdown-item>
-              <hr class="mt-1 mb-1" />
-              <b-dropdown-item class="has-text-left"> Salir </b-dropdown-item>
+              <!-- <hr class="mt-1 mb-1" /> -->
+              <!-- <b-dropdown-item class="has-text-left"> Salir </b-dropdown-item> -->
             </b-dropdown>
             <b-dropdown class="m-0">
               <template #trigger="{ active }">
@@ -77,13 +78,13 @@
                   :icon-right="active ? 'menu-up' : 'menu-down'"
                 />
               </template>
-              <b-dropdown-item> Cortar Celdas </b-dropdown-item>
+              <!-- <b-dropdown-item> Cortar Celdas </b-dropdown-item>
               <b-dropdown-item> Copiar Celdas </b-dropdown-item>
               <b-dropdown-item> Pegar Celdas Arriba </b-dropdown-item>
               <b-dropdown-item> Pegar Celdas Abajo </b-dropdown-item>
-              <b-dropdown-item> Pegar Celdas y Reemplazar </b-dropdown-item>
+              <b-dropdown-item> Pegar Celdas y Reemplazar </b-dropdown-item> -->
               <b-dropdown-item> Eliminar Celdas </b-dropdown-item>
-              <b-dropdown-item> Deshacer Eliminar Celdas </b-dropdown-item>
+              <!-- <b-dropdown-item> Deshacer Eliminar Celdas </b-dropdown-item>
               <hr class="mt-1 mb-1" />
               <b-dropdown-item> Separar Celda </b-dropdown-item>
               <b-dropdown-item> Unir hacia arriba </b-dropdown-item>
@@ -95,7 +96,7 @@
               <b-dropdown-item> Editar Metadata </b-dropdown-item>
               <hr class="mt-1 mb-1" />
               <b-dropdown-item> Buscar y Reemplazar </b-dropdown-item>
-              <hr class="mt-1 mb-1" />
+              <hr class="mt-1 mb-1" /> -->
             </b-dropdown>
             <b-dropdown class="m-0">
               <template #trigger="{ active }">
@@ -115,8 +116,9 @@
                   :icon-right="active ? 'menu-up' : 'menu-down'"
                 />
               </template>
-              <b-dropdown-item> Insertar celda arriba </b-dropdown-item>
-              <b-dropdown-item> Insertar celda abajo </b-dropdown-item>
+              <b-dropdown-item @click="handleAddCelda"> Insertar celda de texto </b-dropdown-item>
+              <b-dropdown-item @click="handleAddCeldaText"> Insertar celda de código </b-dropdown-item>
+              <!-- <b-dropdown-item> Insertar celda abajo </b-dropdown-item> -->
             </b-dropdown>
             <b-dropdown class="m-0">
               <template #trigger="{ active }">
@@ -126,16 +128,16 @@
                   :icon-right="active ? 'menu-up' : 'menu-down'"
                 />
               </template>
-              <b-dropdown-item> Ejecutar Celda </b-dropdown-item>
-              <b-dropdown-item>
+              <b-dropdown-item  @click="ejecutarCelda"> Ejecutar Celda </b-dropdown-item>
+              <!-- <b-dropdown-item>
                 Ejecutar Celda y Seleccionar Siguiente
               </b-dropdown-item>
               <b-dropdown-item>
                 Ejecutar Celda e Insertar Debajo
-              </b-dropdown-item>
+              </b-dropdown-item> -->
               <b-dropdown-item @click="ejecutarTodas"> Ejecutar Todas </b-dropdown-item>
-              <b-dropdown-item> Ejecutar Todas Debajo </b-dropdown-item>
-              <b-dropdown-item> Ejecutar Todas Encima </b-dropdown-item>
+              <!-- <b-dropdown-item> Ejecutar Todas Debajo </b-dropdown-item>
+              <b-dropdown-item> Ejecutar Todas Encima </b-dropdown-item> -->
             </b-dropdown>
             <b-dropdown class="m-0">
               <template #trigger="{ active }">
@@ -180,16 +182,15 @@
             <b-button type="is-dark" @click="handleSwapTextCode"
               ><b-icon icon="swap-horizontal"></b-icon
             ></b-button>
-            <b-button type="is-dark"
+            <!-- <b-button type="is-dark"
               ><b-icon icon="content-cut"></b-icon
             ></b-button>
-            <!-- <div class="is-divider-vertical"></div> -->
             <b-button type="is-dark"
               ><b-icon icon="content-copy"></b-icon
             ></b-button>
             <b-button type="is-dark"
               ><b-icon icon="content-paste"></b-icon
-            ></b-button>
+            ></b-button> -->
             <b-button type="is-dark" @click="upActiveCell"
               ><b-icon icon="arrow-up"></b-icon
             ></b-button>
@@ -203,8 +204,11 @@
             <b-button type="is-dark"><b-icon icon="stop"></b-icon></b-button>
             <b-button type="is-dark"><b-icon icon="restart"></b-icon></b-button>
             <b-button type="is-dark" @click="escucharCelda"
-              ><b-icon icon="fast-forward"></b-icon
+              ><b-icon icon="volume-high"></b-icon
             ></b-button>
+            <b-switch class="textoSwitch" v-model="enableVoice">
+                Activar retroalimentación auditiva
+            </b-switch>
             <!-- <input type="text" v-model="text">
             <input type="text" v-model="currentCell"> -->
           </div>
@@ -224,6 +228,7 @@
               :indice="index"
               :ejecutar="nbCell.ejecutar"
               :activeCell="nbCell.activeCell"
+              :ownerid="fileInputData.owner"
               @emitirKey="procesarEmit"
               @finishScript="procesarFinish"
               @emitirSalida="emitirSalida"
@@ -295,6 +300,7 @@ export default {
 
   data() {
     return {      
+      enableVoice:true,
       currentCell: 0,
       arrayNoteBookCell: [
         { entrada: "", salida:"", ejecutar: false, activeCell: true,isTextCell:false },
@@ -335,15 +341,18 @@ export default {
       }
       else if(e.key == "c")
       {
+        this.$refs.componenteSpeak.quickSpeak("Nueva celda creada")
         this.handleAddCelda()
       }
       else if(e.key == "q")
       {
         this.upActiveCell()
+        
       }
       else if(e.key == "y")
       {
         this.downActiveCell()
+        
       }
       
     },
@@ -411,6 +420,7 @@ export default {
       });
       this.arrayNoteBookCell[this.currentCell].activeCell = true;
       console.log(valor2);
+      this.$refs.componenteSpeak.quickSpeak("Celda seleccionada actualmente, celda "+(this.currentCell+1))
     },
     saveFile()
     {
@@ -880,5 +890,10 @@ export default {
   border-left: 0px solid;
   border-right: 1px solid;
   border-bottom: 1px solid;
+}
+.textoSwitch
+{
+  color: #FFFFFF;
+  margin-top: 5px;
 }
 </style>

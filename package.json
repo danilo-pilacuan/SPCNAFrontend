@@ -14,6 +14,7 @@
     "prismjs": "^1.25.0",
     "vue": "^2.6.11",
     "vue-browser-detect-plugin": "^0.1.18",
+    "vue-clipboard2": "^0.3.3",
     "vue-cookies": "^1.7.4",
     "vue-i18n": "^8.27.1",
     "vue-keypress": "^2.1.1",
