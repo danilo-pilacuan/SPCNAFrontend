@@ -1,8 +1,12 @@
 <template>
-  <div class="home" tabindex="0" @keydown.alt="procesarTecladoAlt" @keydown.exact="capturarTeclado" v-if="fileInputData">
+  <div class="home" tabindex="0" v-if="fileInputData">
+    <!-- <div class="home" tabindex="0" @keydown.alt="procesarTecladoAlt" @keydown.exact="capturarTeclado" v-if="fileInputData"> -->
 <!--
   TODO: hacer menu mas interactivo con flechas y out por out
      -->
+     <UserHandle/> 
+    <Keypress key-event="keyup" :multiple-keys="multiple" @success="procesarTecladoAlt" @wrong="logwrong"/>
+    
     <VoiceComponent ref="componenteSpeak" :texto="texto" :reproducir="reproducir"
     @onTexto="emitTexto"
     @onReproducir="emitReproducir"
@@ -270,16 +274,20 @@ import { VueMathjax } from "vue-mathjax";
 import NotebookCell from "../components/NotebookCell";
 import VoiceComponent from '/src/components/VoiceComponent'
 
+import UserHandle from '../components/UserHandle.vue'
+
 export default {
+  components: {
+    VoiceComponent: VoiceComponent,
+    "UserHandle": UserHandle,
+    Keypress: () => import('vue-keypress'),
+    NotebookCell: NotebookCell,
+  },
   props:
   {
     fileInput:{
       required: false
     },
-  },
-  components: {
-    NotebookCell: NotebookCell,
-    VoiceComponent: VoiceComponent,
   },
   watch: {
     fileInputData (newValue) {
@@ -300,7 +308,79 @@ export default {
 
   data() {
     return {      
+
+      //necesarios para voiceComponent
+      texto:"Prueba texto", //"Bienvenido, presione alt mas w para ir al area de trabajo o alt mas ye para recibir ayuda",
+      reproducir:false,
+
+      //Necesarios para keypress
+      pressedKeyCode: null,
+      multiple: [
+        {
+          keyCode: "M".charCodeAt(0), // 
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "C".charCodeAt(0), // 
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "H".charCodeAt(0), // H
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "W".charCodeAt(0), // H
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "R".charCodeAt(0), // H
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "L".charCodeAt(0), // H
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "C".charCodeAt(0), // H
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "Q".charCodeAt(0), // H
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "S".charCodeAt(0), // H
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "X".charCodeAt(0), // H
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "Y".charCodeAt(0), // H
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
+          keyCode: "Z".charCodeAt(0), // H
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+      ],
+
+      ///////////////////////////////////////////////
       enableVoice:true,
+      enableEmit:false,
       currentCell: 0,
       arrayNoteBookCell: [
         { entrada: "", salida:"", ejecutar: false, activeCell: true,isTextCell:false },
@@ -315,7 +395,120 @@ export default {
     };
   },
   methods: {
-    procesarTecladoAlt(e) {
+
+    logwrong(response){
+      let charEvent=response.event.key;
+      if(charEvent!=="Alt" && charEvent!=="Shift" && charEvent!=="Control")
+      {
+        this.$refs.componenteSpeak.quickSpeak(charEvent);     
+      }
+    },
+    emitTexto(valor, valor2) {
+      console.log("Procesar Texto")
+      this.texto=valor
+      console.log(valor)
+      
+    },
+    emitReproducir(valor, valor2) {
+      this.reproducir=valor
+      console.log("Procesar CT")
+      console.log(valor)
+      
+    },
+   
+    //Methods captura y voz
+
+    procesarTecladoAlt(response) {     
+      
+
+      if (response.event.keyCode == "C".charCodeAt(0)) {
+        this.$refs.componenteSpeak.quickSpeak("Nueva celda creada")
+        this.handleAddCelda()
+      }
+
+      if (response.event.keyCode == "M".charCodeAt(0)) {
+        this.playMenu()
+      }
+
+
+      if (response.event.keyCode == "H".charCodeAt(0)) {
+        this.$t("homeHelp").forEach(element => {
+          this.$refs.componenteSpeak.quickSpeak(element)
+        }); 
+      }      
+
+      if (response.event.keyCode == "X".charCodeAt(0)) {
+          this.$refs.componenteSpeak.pauseSpeak()
+      }      
+
+      if (response.event.keyCode == "Y".charCodeAt(0)) {
+        
+          this.$refs.componenteSpeak.resumeSpeak()        
+      }      
+
+      if (response.event.keyCode == "Z".charCodeAt(0)) {
+        this.$refs.componenteSpeak.restartSpeak()
+      } 
+
+
+      if (response.event.keyCode == "W".charCodeAt(0)) {
+        document.getElementsByClassName("prism-editor__textarea")[this.currentCell].focus();
+        this.$refs.componenteSpeak.quickSpeak("escribir")
+      } 
+
+      if (response.event.keyCode == "R".charCodeAt(0)) {
+        this.ejecutarTodas()
+      } 
+
+      if (response.event.keyCode == "L".charCodeAt(0)) {
+        console.log("EscucharCelda")
+        this.escucharCelda()
+      } 
+
+      if (response.event.keyCode == "Q".charCodeAt(0)) {
+        this.upActiveCell()
+      } 
+
+      if (response.event.keyCode == "S".charCodeAt(0)) {
+        this.downActiveCell()
+      } 
+      
+    },
+
+    activateVoiceComponent() {
+      setTimeout(() => {
+        this.enableEmit=true
+          
+          this.playMenu()
+          console.log(this.enableEmit)
+          
+          console.log("ENABLE EMIT")
+          
+          
+        //this.reproducir=true
+        }, 2000);
+    },
+    playMenu()
+    {
+      if(this.fileInput.isLesson==1)
+      {
+        this.$t("workingAreaLesson").forEach(element => {
+            this.$refs.componenteSpeak.quickSpeak(element)
+            console.log(element)
+          });
+      }
+      else
+      {
+        this.$t("workingAreaMenu").forEach(element => {
+            this.$refs.componenteSpeak.quickSpeak(element)
+            console.log(element)
+          });
+      }
+    },
+
+
+    ////////////////////////////////////////////////////////////////////////
+    procesarTecladoAltbAK(e) {
       console.log("con alt");
       console.log(e.key);
       if (e.key == "m") {
@@ -420,7 +613,10 @@ export default {
       });
       this.arrayNoteBookCell[this.currentCell].activeCell = true;
       console.log(valor2);
-      this.$refs.componenteSpeak.quickSpeak("Celda seleccionada actualmente, celda "+(this.currentCell+1))
+      if(this.enableEmit)
+      {
+        this.$refs.componenteSpeak.quickSpeak("Celda seleccionada actualmente, celda "+(this.currentCell+1))
+      }
     },
     saveFile()
     {
@@ -685,29 +881,6 @@ export default {
 
 
     ////Methods for voice
-
-    activateVoiceComponent() {
-      setTimeout(() => {
-          this.texto.forEach(element => {
-            this.$refs.componenteSpeak.quickSpeak(element)
-            console.log(element)
-          });
-
-        //this.reproducir=true
-        }, 2000);
-    },
-    emitTexto(valor, valor2) {
-      console.log("Procesar Texto")
-      this.texto=valor
-      console.log(valor)
-      
-    },
-    emitReproducir(valor, valor2) {
-      this.reproducir=valor
-      console.log("Procesar CT")
-      console.log(valor)
-      
-    },
   },
   computed: {
     authenticated() {
@@ -779,6 +952,8 @@ export default {
 
       //this.activateVoiceComponent()
     }
+    
+    this.activateVoiceComponent()
   },
 };
 </script>

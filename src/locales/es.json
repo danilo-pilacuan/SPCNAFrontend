@@ -19,15 +19,20 @@
     ],
     "workingAreaMenu": [
         "Presiona alt más, w, para escribir en celda actual..... ",
-        "Presiona alt más, Ah, para limpiar celda actual..... ",
         "Presione alt más, R, para ejecutar celda actual..... ",
         "Presione alt más, ele, para escuchar celda actual..... ",
-        "Presione alt más, P, para leer la pantalla actual",
         "Presione alt más, C, para crear nueva celda..... ",
         "Presione alt más, Q, para subir celda..... ",
-        "Presione alt más, Ye, para bajar celda..... ",
-        "Presione alt más, flecha arriba para seleccionar opcion siguiente..... ",
-        "Presione alt más, flecha abajo para seleccionar opcion anterior..... ",
+        "Presione alt más, S, para bajar celda..... ",
+        "Presione alt más, M, para escuchar menú nuevamente..... ",
+        "Presione alt más, H, para ayuda..... "
+    ],
+    "workingAreaLesson": [
+        "Presione alt más, R, para ejecutar celda actual..... ",
+        "Presione alt más, ele, para escuchar celda actual..... ",
+        "Presione alt más, C, para crear nueva celda..... ",
+        "Presione alt más, Q, para subir celda..... ",
+        "Presione alt más, S, para bajar celda..... ",
         "Presione alt más, M, para escuchar menú nuevamente..... ",
         "Presione alt más, H, para ayuda..... "
     ],
