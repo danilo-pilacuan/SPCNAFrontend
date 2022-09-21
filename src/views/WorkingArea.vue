@@ -332,6 +332,11 @@ export default {
           preventDefault: true,
         },
         {
+          keyCode: "J".charCodeAt(0), // H
+          modifiers: ['altKey'],
+          preventDefault: true,
+        },
+        {
           keyCode: "W".charCodeAt(0), // H
           modifiers: ['altKey'],
           preventDefault: true,
@@ -400,7 +405,18 @@ export default {
       let charEvent=response.event.key;
       if(charEvent!=="Alt" && charEvent!=="Shift" && charEvent!=="Control")
       {
+        if(charEvent==")")
+          charEvent="Cierre paréntesis"
+        if(charEvent=="(")
+          charEvent="abre paréntesis"
+        if(charEvent=="!")
+          charEvent="Cierre exclamación"
+        if(charEvent=="Dead")
+          charEvent="signo de potencia"
+          
+          
         this.$refs.componenteSpeak.quickSpeak(charEvent);     
+        console.log(charEvent)
       }
     },
     emitTexto(valor, valor2) {
@@ -430,6 +446,11 @@ export default {
         this.playMenu()
       }
 
+      if (response.event.keyCode == "J".charCodeAt(0)) {
+        this.saveFile()
+        this.$refs.componenteSpeak.quickSpeak("Archivo guardado correctamente, presione enter para continuar")
+      }
+
 
       if (response.event.keyCode == "H".charCodeAt(0)) {
         this.$t("homeHelp").forEach(element => {
@@ -457,7 +478,8 @@ export default {
       } 
 
       if (response.event.keyCode == "R".charCodeAt(0)) {
-        this.ejecutarTodas()
+        //this.ejecutarTodas()
+        this.ejecutarCelda()
       } 
 
       if (response.event.keyCode == "L".charCodeAt(0)) {
@@ -484,6 +506,10 @@ export default {
           
           console.log("ENABLE EMIT")
           
+          this.arrayNoteBookCell.forEach((element) => {
+            element.activeCell = false;
+          });
+          this.arrayNoteBookCell[0].activeCell = true;
           
         //this.reproducir=true
         }, 2000);
@@ -555,10 +581,13 @@ export default {
     escucharCelda()
     {
       this.texto=""
+      console.log("Escuchar Celda handler")
       if(this.arrayNoteBookCell[this.currentCell].isTextCell)
       {
         //this.speak("Celda "+(this.currentCell+1)+" "+this.arrayNoteBookCell[this.currentCell].entrada)
-        this.texto="Celda "+(this.currentCell+1)+" "+this.arrayNoteBookCell[this.currentCell].entrada
+        let auxCeldaTexto="Celda "+(this.currentCell+1)+" "+this.arrayNoteBookCell[this.currentCell].entrada
+        this.$refs.componenteSpeak.quickSpeak(auxCeldaTexto)
+
         console.log("Execute Text")
       }
       else
@@ -954,6 +983,10 @@ export default {
     }
     
     this.activateVoiceComponent()
+
+    
+      
+
   },
 };
 </script>

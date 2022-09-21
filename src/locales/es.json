@@ -21,6 +21,7 @@
         "Presiona alt más, w, para escribir en celda actual..... ",
         "Presione alt más, R, para ejecutar celda actual..... ",
         "Presione alt más, ele, para escuchar celda actual..... ",
+        "Presione alt más, jota, para guardar el archivo..... ",
         "Presione alt más, C, para crear nueva celda..... ",
         "Presione alt más, Q, para subir celda..... ",
         "Presione alt más, S, para bajar celda..... ",
@@ -30,7 +31,6 @@
     "workingAreaLesson": [
         "Presione alt más, R, para ejecutar celda actual..... ",
         "Presione alt más, ele, para escuchar celda actual..... ",
-        "Presione alt más, C, para crear nueva celda..... ",
         "Presione alt más, Q, para subir celda..... ",
         "Presione alt más, S, para bajar celda..... ",
         "Presione alt más, M, para escuchar menú nuevamente..... ",

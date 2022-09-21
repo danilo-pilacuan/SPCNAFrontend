@@ -265,7 +265,6 @@ export default {
   },
   mounted() {
     this.fetchUsers();
-    this.authLogin();
   },
   methods: {
     
@@ -358,9 +357,10 @@ export default {
             //this.fetchUsers();
             this.showModalCreateEdit=false;
             this.$buefy.dialog.alert("Usuario agregado correctamente");
+            this.fetchUsers();
           });
 
-        this.fetchUsers();
+        
       } else if (this.isEditUser) 
       {
 
